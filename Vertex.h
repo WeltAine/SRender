@@ -27,7 +27,7 @@ public:
 	Vertex& operator * (const Matrix& h);//这里对使用者而言，可能是M， MV， P
 
 	bool operator == (const Vertex& aim);
-	bool operator < (const Vertex& aim);
+	bool operator < (const Vertex& aim) const;//必须声明为const
 
 	void Print();
 

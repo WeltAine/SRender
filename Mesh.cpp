@@ -15,12 +15,12 @@ void Mesh::AddVertexData(const Vertex& v)
 	vertexBuffer.emplace_back(v);
 }
 
-void Mesh::AddVertexData(const Vector3f& pos, const Vector3f& nor, const Color& col, const Vector2i& uv)
+void Mesh::AddVertexData(const Vector3f& pos, const Vector3f& nor, const Color& col, const Vector2f& uv)
 {
 	vertexBuffer.emplace_back(pos, nor, col, uv);
 }
 
-void Mesh::AddVertexData(const Vector3f& pos, const Color& col, const Vector2i& uv)
+void Mesh::AddVertexData(const Vector3f& pos, const Color& col, const Vector2f& uv)
 {
 	vertexBuffer.emplace_back(pos, col, uv);
 }

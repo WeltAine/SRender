@@ -23,8 +23,8 @@ public:
 	~Mesh();
 
 	void AddVertexData(const Vertex& v);
-	void AddVertexData(const Vector3f& pos, const Vector3f& nor, const Color& col, const Vector2i& uv);
-	void AddVertexData(const Vector3f& pos, const Color& col, const Vector2i& uv);
+	void AddVertexData(const Vector3f& pos, const Vector3f& nor, const Color& col, const Vector2f& uv);
+	void AddVertexData(const Vector3f& pos, const Color& col, const Vector2f& uv);
 
 	Transform GetTransform();
 	void SetTransform(const Transform& t);

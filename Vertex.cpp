@@ -57,9 +57,9 @@ bool Vertex::operator==(const Vertex& aim)
 			this->uv == aim.uv;
 }
 
-bool Vertex::operator<(const Vertex& aim)
+bool Vertex::operator<(const Vertex& aim) const
 {
-	return this->position.magnitude < aim.position.magnitude;
+	return this->position.magnitude < aim.position.magnitude;//如果仅使用距离来作为象征，那么三维中一定存在一个二维是完全等价的
 }
 
 void Vertex::Print()

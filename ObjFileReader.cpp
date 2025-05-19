@@ -1,20 +1,22 @@
 #include "ObjFileReader.h"
 #include <sstream>  // 提供 std::istringstream
 #include <map>
+#include <cstdlib>
 
+//字符串拆解
 void StringSplit(std::string s, char splitchar, std::vector<std::string>& vec)
 {
 	vec.clear();
 	std::string tem;
 
-	for (int i; i < s.size(); i++) {
+	for (int i = 0; i <= s.size(); i++) {
 
 		if (s[i] == splitchar && i == 0) {
 
 			continue;
 
 		}
-		else if(s[i] == splitchar) {
+		else if(s[i] == splitchar || i == s.size()) {
 
 			vec.push_back(tem);
 			tem.clear();
@@ -34,7 +36,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 
 	std::ifstream in(path);
 	std::string line = "";//临时存储字符串用于
-	std::string prefix = "";
+	std::string prefix = "";//前缀
 
 	std::vector<std::string> group;
 	std::vector<Vector3f> positionBuffer;
@@ -56,7 +58,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 				line.erase(0, 2);//删除从索引0开数的两个字符，也就是0和1
 				StringSplit(line, ' ', group);
 
-				Vector3f tem((float)atof(group[0].c_str()), (float)atof(group[1].c_str()), (float)atof(group[2].c_str()));
+				Vector3f tem(std::stof(group[0]), std::stof(group[1]), std::stof(group[2]));
 				positionBuffer.push_back( tem );
 
 			}
@@ -65,7 +67,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 				line.erase(0, 3);//删除从索引0开数的两个字符，也就是012
 				StringSplit(line, ' ', group);
 
-				Vector2f tem((float)atof(group[0].c_str()), (float)atof(group[1].c_str()));
+				Vector2f tem(std::stof(group[0]), std::stof(group[1]));
 				uvBuffer.push_back(tem);
 
 			}
@@ -74,7 +76,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 				line.erase(0, 3);//删除从索引0开数的两个字符，也就是012
 				StringSplit(line, ' ', group);
 
-				Vector3f tem((float)atof(group[0].c_str()), (float)atof(group[1].c_str()), (float)atof(group[2].c_str()), 0);
+				Vector3f tem(std::stof(group[0]), std::stof(group[1]), std::stof(group[2]), 0);
 				normalBuffer.push_back(tem);
 
 			}
@@ -100,7 +102,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 
 						Vertex tem(positionBuffer[positionIndex], normalBuffer[normalIndex], Color::white, uvBuffer[uvIndex]);
 
-						if (vertexBuffer.find(tem) != vertexBuffer.end()) {
+						if (vertexBuffer.find(tem) == vertexBuffer.end()) {
 
 							trangleIndex[i] = vertexBuffer.size();
 							vertexBuffer.insert(std::pair<Vertex, int>(tem, trangleIndex[i]));
@@ -122,7 +124,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 
 					std::vector <std::string> temIndex;
 
-					int trangleIndex[3];
+					int trangleIndex[4];
 					for (int i = 0; i < 4; i++) {
 						StringSplit(group[i], '/', temIndex);
 
@@ -133,7 +135,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 
 						Vertex tem(positionBuffer[positionIndex], normalBuffer[normalIndex], Color::white, uvBuffer[uvIndex]);
 
-						if (vertexBuffer.find(tem) != vertexBuffer.end()) {
+						if (vertexBuffer.find(tem) == vertexBuffer.end()) {
 
 							trangleIndex[i] = vertexBuffer.size();
 							vertexBuffer.insert(std::pair<Vertex, int>(tem, trangleIndex[i]));

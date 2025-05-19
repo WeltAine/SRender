@@ -4,6 +4,9 @@
 #include "Input.h"
 #include "Tool.h"
 #include <iostream>
+#include <mmsystem.h>
+
+#pragma comment(lib, "winmm.lib")
 
 
 static const int windowWidth = 500;
@@ -80,6 +83,8 @@ void main() {
 	planePhong->phongVertex.p = mainCamera->Perspective(60, 1, 1, 10);
 
 
+	currentMesh = new Mesh();
+	plane = new Mesh();
 	//读取模型
 	ReadObjFile("cube.obj", currentMesh);
 
@@ -175,9 +180,9 @@ void DoRender(Window* w)
 	device->Clear(depthBuffer);
 	device->Clear(zBuffer);
 	device->DrawMesh(*currentMesh, shadow, depthBuffer);
-	device->DrawMesh(*plane, shadow, depthBuffer);
+	//device->DrawMesh(*plane, shadow, depthBuffer);
 	device->DrawMesh(*currentMesh, meshPhong, zBuffer);
-	device->DrawMesh(*plane, planePhong, zBuffer);
+	//device->DrawMesh(*plane, planePhong, zBuffer);
 	//！！一个Mesh配一个Shader，这样太浪费时间了，也不和逻辑，造成这个现象的原因在于Uniform中的部分信息仅适配某一个mesh，对shader重载（）试试实现切换
 
 	//双缓冲//？交给AI

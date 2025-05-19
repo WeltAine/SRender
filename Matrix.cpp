@@ -3,15 +3,20 @@
 Matrix Matrix::Identity() {
 
 	Matrix tem;
-	for (int i = 0; i < 4; i++) {
-		tem.matrix[i][i] = 1;
-	}
+	//for (int i = 0; i < 4; i++) {
+	//	tem.matrix[i][i] = 1;
+	//}
 	return tem;
 }
 
 
 Matrix::Matrix() {
-	*this = Matrix::Identity();
+	//*this = Matrix::Identity();//和Identity触发递归调用了
+
+	for (int i = 0; i < 4; i++) {
+		this->matrix[i][i] = 1;
+	}
+
 }
 
 Matrix::~Matrix() {
