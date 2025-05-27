@@ -48,7 +48,9 @@ void main() {
 	Texture* gezi = new Texture();
 	gezi->LoadTexture("gezi.bmp");
 
-	
+		//创建shader
+	shadow = new ShadowShader();
+
 		//创建shader
 	meshPhong = new PhongShader(PhongVert(), PhongFrag(gezi, depthBuffer));
 	

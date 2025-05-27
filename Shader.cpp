@@ -184,22 +184,26 @@ void ShadowShader::VS(Vertex& v0, Vertex& v1, Vertex& v2)
 			
 		case(0): {
 			temVertex = &v0;
+			break;
 		}
 
 		case(1): {
 			temVertex = &v1;
+			break;
 		}
 
 		case(2): {
 			temVertex = &v2;
+			break;
 		}
 		default: {
 			temVertex = nullptr;
+			break;
 		}
 
 		}
 
-
+		if(temVertex != nullptr)
 		//MVP±ä»»
 		this->shadowVertex.lightP * (this->shadowVertex.lightV * (this->shadowVertex.m * (*temVertex)));
 
@@ -208,14 +212,20 @@ void ShadowShader::VS(Vertex& v0, Vertex& v1, Vertex& v2)
 
 		case(0): {
 			v0 = *temVertex;
+			break;
 		}
 
 		case(1): {
 			v1 = *temVertex;
+			break;
 		}
 
 		case(2): {
 			v2 = *temVertex;
+			break;
+		}
+		default: {
+			break;
 		}
 
 		}

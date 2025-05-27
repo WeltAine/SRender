@@ -9,7 +9,7 @@
 #include "Texture.h"
 #include "Buffer.h"
 
-
+//核心功能是记录两个着色器需要用到和产生的数据
 struct PhongVert {
 
 	std::vector<DirectionLight> directionLights;
