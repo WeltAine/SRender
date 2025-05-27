@@ -59,7 +59,17 @@ bool Vertex::operator==(const Vertex& aim)
 
 bool Vertex::operator<(const Vertex& aim) const
 {
-	return this->position.magnitude < aim.position.magnitude;//如果仅使用距离来作为象征，那么三维中一定存在一个二维是完全等价的
+	//return this->position.magnitude < aim.position.magnitude;//如果仅使用距离来作为象征，那么三维中一定存在一个二维是完全等价的
+
+	//采取类似于桶排序的想法，对这个8维信息进行比较 
+	return (this->position.x != aim.position.x) ? (this->position.x < aim.position.x) :
+		(this->position.y != aim.position.y) ? (this->position.y < aim.position.y) :
+		(this->position.z != aim.position.z) ? (this->position.z < aim.position.z) :
+		(this->normal.x != aim.normal.x) ? (this->normal.x < aim.normal.x) :
+		(this->normal.y != aim.normal.y) ? (this->normal.y < aim.normal.y) :
+		(this->normal.z != aim.normal.z) ? (this->normal.z < aim.normal.z) :
+		(this->uv.x != aim.uv.x) ? (this->uv.x < aim.uv.x) :
+		(this->uv.y < aim.uv.y);
 }
 
 void Vertex::Print()
