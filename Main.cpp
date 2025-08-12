@@ -11,319 +11,176 @@
 
 #pragma comment(lib, "winmm.lib")
 
-namespace oldMain {
-	//static const int windowWidth = 500;
-	//static const int windowHeight = 500;
+static const int windowWidth = 512;
+static const int windowHeight = 512;
 
-	//Renderer* device = nullptr;
-
-	//Camera* mainCamera = new Camera(Transform(Vector3f(0, 0, -10), Vector3f(), Vector3f(1, 1, 1)));
-	//Vector3f deltaCameraPosition, deltaCameraRotation, * cameraDirection = new Vector3f(0, 0, 1, 0);
+Window* w = new Window(windowWidth, windowHeight, "Test");//Á™óÂè£
 
 
-	//Mesh* currentMesh = nullptr, * plane = nullptr;
-	//ShadowShader* shadow = nullptr;
-	//PhongShader* meshPhong = nullptr, * planePhong = nullptr;
+Camera mainCamera{ {}, true, 1, 1, 50, 60 };
+Camera dlCamera{ {}, false, 1, 1, 50, 168.6 };
+DirectionLight directLight{ dlCamera, 1 };
 
-	////ƒø«∞÷ªƒ‹‘À––µ•π‚‘¥
-	//DepthBuffer* _depthBuffer = new DepthBuffer(windowWidth * 2, windowHeight * 2);//“ı”∞µƒzbuffer
-	//DepthBuffer* zBuffer = new DepthBuffer(windowWidth, windowHeight);//œ‡ª˙µƒzbuffer
-
-
-	//void UpdateInput();
-	//void Update(Window* w);
-	//void DoRender(Window* w);
-	//void ShowFPS(Window* w);
-	//void CreateCube();
-	//void CreatePlane();
+Mesh cube{};
+Mesh plane{};
 
 
+//Á∫πÁêÜ
+Texture* gezi = new Texture(225, 225);
 
-	//void main() {
+RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };
+newRender::Render render{ w->screenHDC, windowWidth, windowHeight, rDate };
 
-	//	//¥∞ø⁄≈‰÷√
-	//	Window* w = new Window(windowWidth, windowHeight, "Test");
-
-	//	//‰÷»æπ‹œﬂ≈‰÷√
-	//	device = new Renderer(w->screenHDC, windowWidth, windowHeight, mainCamera);
-
-	//	//º”‘ÿŒ∆¿ÌŒ∆¿Ì
-	//	Texture* gezi = new Texture();
-	//	gezi->LoadTexture("gezi.bmp");
-
-	//	//¥¥Ω®shader
-	//	shadow = new ShadowShader();
-
-	//	//¥¥Ω®shader
-	//	meshPhong = new PhongShader(PhongVert(), PhongFrag(gezi, _depthBuffer));
-
-	//	//…Ë÷√π‚‘¥”Îœ‡πÿ≤Œ ˝
-	////DirectionLight light(Vector3f(0, 20, 0), Vector3f(0, -1, 0), 1);
-	//	DirectionLight light(Vector3f(10, 10, 10), Vector3f(-1, -1, -1), 1);
-	//	meshPhong->phongVertex.directionLights.push_back(light);
-	//	//meshPhong->phongVertex.lightV = shadow->shadowVertex.lightV = mainCamera->LookAt(light.position, light.direction, Vector3f(0, 0, -1));
-	//	meshPhong->phongVertex.lightV = shadow->shadowVertex.lightV = mainCamera->LookAt(light.position, light.direction, Vector3f(0, 1, 0));
-	//	meshPhong->phongVertex.lightP = shadow->shadowVertex.lightP = mainCamera->Orthographic(-5, 5, 5, -5, 15, 22);
-
-	//	//…Ë÷√œ‡ª˙”Îœ‡πÿ≤Œ ˝
-	//	meshPhong->phongVertex.camera = mainCamera;
-	//	meshPhong->phongVertex.v = mainCamera->LookAt(mainCamera->transform.position, mainCamera->transform.zAxis, mainCamera->transform.yAxis);
-	//	meshPhong->phongVertex.p = mainCamera->Perspective(60, 1, 5, 15);
-
-	//	//…Ë÷√ŒÔÃÂ≤Œ ˝
-	////meshPhong->phongVertex.m = 
+newShader::ShadowShader shadowShader{ &rDate };
+newShader::PhongShader phongShader{ &rDate };
 
 
-	////---------------------------------------------------------------------------------------------------
+void Update(Window* w);
 
-	//	//¥¥Ω®shader
-	//	planePhong = new PhongShader(PhongVert(), PhongFrag(gezi, _depthBuffer));
+int main() {
 
-	//	//…Ë÷√π‚‘¥”Îœ‡πÿ≤Œ ˝
-	//	planePhong->phongVertex.directionLights.push_back(light);
-	//	planePhong->phongVertex.lightV = mainCamera->LookAt(light.position, light.direction, Vector3f(0, 1, 0));
-	//	planePhong->phongVertex.lightP = mainCamera->Orthographic(-10, 10, 10, -10, 10, 40);
+	//Âä†ËΩΩÊï∞ÊçÆ
+	ReadObjFile("cube.obj", &cube);
+	ReadObjFile("Plane.obj", &plane);
+	gezi->LoadTexture("gezi.bmp");//ËÆ∞ÂæódeleteÂïä
 
-	//	//…Ë÷√œ‡ª˙”Îœ‡πÿ≤Œ ˝
-	//	planePhong->phongVertex.camera = mainCamera;
-	//	planePhong->phongVertex.v = mainCamera->LookAt(mainCamera->transform.position, mainCamera->transform.zAxis, mainCamera->transform.yAxis);
-	//	planePhong->phongVertex.p = mainCamera->Perspective(60, 1, 1, 10);
+	//Ë∞ÉÊï¥ÈÖçÁΩÆ
+	rDate.shadowShader = &shadowShader;
+	rDate.renderShader = &phongShader;
 
 
-	//	currentMesh = new Mesh();
-	//	plane = new Mesh();
-	//	//∂¡»°ƒ£–Õ
-	//	ReadObjFile("cube.obj", currentMesh);
+	//Ë∞ÉÊï¥‰ΩçÁΩÆ
+	//mainCamera.UpdateCamera({ {0, 0, -5}, {}, {1, 1, 1} }, true, 1, 3, 7, 60);
+	mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);//ËøôÈáåÂú®ËÆæÁΩÆÊó∂Áî®Âà∞ÁöÑtransformÂú∞ÂùÄÊòØDirectLightÁöÑaimCurrentÂú∞ÂùÄ
 
-	//	Update(w);
-	//	//DoRender();
-	//	system("pause");
-
-	//	delete[] _depthBuffer;
-	//	delete gezi;
-	//	delete[] mainCamera;
-	//	delete[] cameraDirection;
-	//	delete currentMesh;
-	//	delete plane;
-	//	delete shadow;//’‚∏ˆŒˆππ «»Á∫Œ‘À––µƒ
-	//	delete meshPhong;
-	//	delete zBuffer;
-	//	delete w;
-
-	//}
+	//directLight.UpdateCamera({ {0, 5, -5}, {45, 0, 0}, {1, 1, 1} }, false, 1, 1, 50, 168.6);
+	//directLight.UpdateCamera({ {-3, 3, -3}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
+	//directLight.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
+	directLight.UpdateCamera({ {2, 2, -2}, {30, -45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
+	//directLight.UpdateCamera({ {-1, 1, -1}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
 
 
-	//void UpdateInput()
-	//{
 
-	//	//œ‡ª˙µƒŒª“∆
-	//	if (IS_KEY_DOWN('A'))
-	//	{
-	//		deltaCameraPosition.x -= 0.01f;
-	//	}
-	//	if (IS_KEY_DOWN('D'))
-	//	{
-	//		deltaCameraPosition.x += 0.01f;
-	//	}
-	//	if (IS_KEY_DOWN('W'))
-	//	{
-	//		deltaCameraPosition.y += 0.01f;
-	//	}
-	//	if (IS_KEY_DOWN('S'))
-	//	{
-	//		deltaCameraPosition.y -= 0.01f;
-	//	}
-	//	mainCamera->transform.Translate(deltaCameraPosition);//“∆∂Ø
+	//render.RunPipeLine();
+	Update(w);
+	system("pause");
 
+	
 
-	//	//œ‡ª˙µƒ–˝◊™
-	//	if (IS_KEY_DOWN('J'))
-	//	{
-	//		deltaCameraRotation.y -= 0.1f;
-	//	}
-	//	if (IS_KEY_DOWN('L'))
-	//	{
-	//		deltaCameraRotation.y += 0.1f;
-	//	}
-	//	if (IS_KEY_DOWN('I'))
-	//	{
-	//		deltaCameraRotation.x -= 0.1f;
-	//	}
-	//	if (IS_KEY_DOWN('K'))
-	//	{
-	//		deltaCameraRotation.x += 0.1f;
-	//	}
-	//	mainCamera->transform.Rotate(deltaCameraRotation);//–˝◊™
-
-
-	//	mainCamera->v = mainCamera->LookAt(mainCamera->transform.position, mainCamera->transform.zAxis, mainCamera->transform.yAxis);
-
-	//	//÷ÿ÷√œ‡ª˙µƒdelta
-	//	deltaCameraPosition.x = 0;
-	//	deltaCameraPosition.y = 0;
-	//	deltaCameraPosition.z = 0;
-
-	//	deltaCameraRotation.x = 0;
-	//	deltaCameraRotation.y = 0;
-	//	deltaCameraRotation.z = 0;
-	//}
-
-
-	////£øÕÌµ„»√AIø¥ø¥∞…
-	//void Update(Window* w)
-	//{
-
-	//	MSG msg = { 0 };
-	//	while (msg.message != WM_QUIT)
-	//	{
-	//		UpdateInput();
-
-	//		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
-	//		{
-	//			TranslateMessage(&msg);
-	//			DispatchMessage(&msg);
-	//		}
-	//		else
-	//		{
-	//			DoRender(w);
-	//			ShowFPS(w);
-	//		}
-	//	}
-
-	//}
-
-
-	//void DoRender(Window* w)
-	//{
-	//	device->Clear(_depthBuffer);
-	//	device->Clear(zBuffer);
-	//	device->DrawMesh(*currentMesh, shadow, _depthBuffer);
-	//	{
-
-	//		BmpImg img(1000, 1000);
-
-	//		for (int y = 0, x; y < 1000; y++)
-	//		{
-	//			for (x = 0; x < 1000; x++)
-	//			{
-	//				float _color = _depthBuffer->depthBuffer[y * 1000 + x] >= 250 ? 1 : _depthBuffer->depthBuffer[y * 1000 + x];
-
-	//				int color = int(_color * 255);
-
-	//				img.set_pixel(x, y, color, color, color);
-	//			}
-	//		}
-
-	//		img.write("shadow.bmp");
-	//	}
-
-	//	//device->DrawMesh(*plane, shadow, depthBuffer);
-	//	device->DrawMesh(*currentMesh, meshPhong, zBuffer);
-	//	//device->DrawMesh(*plane, planePhong, zBuffer);
-	//	//£°£°“ª∏ˆMesh≈‰“ª∏ˆShader£¨’‚—˘Ã´¿À∑— ±º‰¡À£¨“≤≤ª∫Õ¬ﬂº≠£¨‘Ï≥…’‚∏ˆœ÷œÛµƒ‘≠“Ú‘⁄”⁄Uniform÷–µƒ≤ø∑÷–≈œ¢Ωˆ  ≈‰ƒ≥“ª∏ˆmesh£¨∂‘shader÷ÿ‘ÿ£®£© ‘ ‘ µœ÷«–ªª
-
-	//	//À´ª∫≥Â//£øΩª∏¯AI
-	//	BitBlt(w->hdc, 0, 0, windowWidth, windowHeight, w->screenHDC, 0, 0, SRCCOPY);
-	//}
-
-
-	//void ShowFPS(Window* w)
-	//{
-	//	static float  fps = 0;
-	//	static int    frameCount = 0;
-	//	static float  currentTime = 0.0f;
-	//	static float  lastTime = 0.0f;
-
-	//	frameCount++;
-	//	currentTime = timeGetTime() * 0.001f;
-
-	//	if (currentTime - lastTime > 1.0f)
-	//	{
-	//		fps = (float)frameCount / (currentTime - lastTime);
-	//		lastTime = currentTime;
-	//		frameCount = 0;
-	//	}
-
-	//	char strBuffer[20];
-	//	sprintf_s(strBuffer, 20, "%0.3f", fps);
-	//	std::wstring tem = StringToWideString(strBuffer);
-	//	TextOut(w->hdc, 0, 0, tem.c_str(), 6);
-	//}
+	delete gezi;
+	return 0;
 }
 
 
 
+void ShowFPS(Window* w)
+{
+	static float  fps = 0;
+	static int    frameCount = 0;
+	static float  currentTime = 0.0f;
+	static float  lastTime = 0.0f;
 
-	static const int windowWidth = 512;
-	static const int windowHeight = 512;
+	frameCount++;
+	currentTime = timeGetTime() * 0.001f;
 
-	Window* w = new Window(windowWidth, windowHeight, "Test");//¥∞ø⁄
-
-	
-	Camera mainCamera{ {}, true, 1, 1, 50, 60 };
-	DirectionLight directLight{};
-
-	Mesh cube{};
-	//ReadObjFile("cube.obj", &cube);
-
-	//Œ∆¿Ì
-	Texture* gezi = new Texture(225, 225);
-
-	RenderDate rDate{ {&cube}, {gezi}, {&directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };
-	//RenderDate rDate{ {&cube}, {gezi}, {}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };
-	newRender::Render render{ w->screenHDC, windowWidth, windowHeight, rDate };
-
-	newShader::ShadowShader shadowShader{ &rDate };
-	newShader::PhongShader phongShader{ &rDate };
-
-
-	int main() {
-		
-		//º”‘ÿ ˝æ›
-		ReadObjFile("cube.obj", &cube);
-		gezi->LoadTexture("gezi.bmp");//º«µ√delete∞°
-
-		//µ˜’˚≈‰÷√
-		rDate.shadowShader = &shadowShader;
-		rDate.renderShader = &phongShader;
-
-		{
-			BmpImg img(512, 512);
-		
-			for (int y = 0, x; y < 512; y++)
-			{
-				for (x = 0; x < 512; x++)
-				{
-					Color temColor = mainCamera.cBuffer->Sample(511 - x, 511 - y);
-		
-					img.set_pixel(x, y, temColor.r, temColor.g, temColor.b);
-				}
-			}
-		
-			img.write("CameraColorBuffer.bmp");
-		}
-		
-		//µ˜’˚Œª÷√
-		//mainCamera.UpdateCamera({ {0, 0, -5}, {}, {1, 1, 1} }, true, 1, 3, 7, 60);
-		mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);
-
-		//directLight.UpdateCamera({ {0, 5, -5}, {45, 0, 0}, {1, 1, 1} }, false, 1, 1, 50, 168.6);
-		//directLight.UpdateCamera({ {-3, 3, -3}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
-		//directLight.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
-		directLight.UpdateCamera({ {2, 2, -2}, {45, -45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
-		//directLight.UpdateCamera({ {-1, 1, -1}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
-
-
-
-		render.RunPipeLine();
-
-		std::cin.get();
-
-		delete gezi;
-		return 0;
+	if (currentTime - lastTime > 1.0f)
+	{
+		fps = (float)frameCount / (currentTime - lastTime);
+		lastTime = currentTime;
+		frameCount = 0;
 	}
-	
+
+	char strBuffer[20];
+	sprintf_s(strBuffer, 20, "%0.3f", fps);
+	std::wstring tem = StringToWideString(strBuffer);
+	TextOut(w->hdc, 0, 0, tem.c_str(), 6);
+}
+
+Vector3f deltaCameraPosition{};
+Vector3f deltaCameraRotation{};
+
+void UpdateInput()
+{
+
+	//Áõ∏Êú∫ÁöÑ‰ΩçÁßª
+	if (IS_KEY_DOWN('A'))
+	{
+		deltaCameraPosition.x -= 0.01f;
+	}
+	if (IS_KEY_DOWN('D'))
+	{
+		deltaCameraPosition.x += 0.01f;
+	}
+	if (IS_KEY_DOWN('W'))
+	{
+		deltaCameraPosition.z += 0.01f;
+	}
+	if (IS_KEY_DOWN('S'))
+	{
+		deltaCameraPosition.z -= 0.01f;
+	}
+	if (IS_KEY_DOWN('Q'))
+	{
+		deltaCameraPosition.y += 0.01f;
+	}
+	if (IS_KEY_DOWN('E'))
+	{
+		deltaCameraPosition.y -= 0.01f;
+	}
+
+	render.renderDate.mainCamera->transform.Translate(deltaCameraPosition);//ÁßªÂä®
 
 
+	//Áõ∏Êú∫ÁöÑÊóãËΩ¨
+	if (IS_KEY_DOWN('J'))
+	{
+		deltaCameraRotation.y -= 0.1f;
+	}
+	if (IS_KEY_DOWN('L'))
+	{
+		deltaCameraRotation.y += 0.1f;
+	}
+	if (IS_KEY_DOWN('I'))
+	{
+		deltaCameraRotation.x -= 0.1f;
+	}
+	if (IS_KEY_DOWN('K'))
+	{
+		deltaCameraRotation.x += 0.1f;
+	}
+	render.renderDate.mainCamera->transform.Rotate(deltaCameraRotation);//ÊóãËΩ¨
 
 
+	//ÈáçÁΩÆÁõ∏Êú∫ÁöÑdelta
+	deltaCameraPosition.x = 0;
+	deltaCameraPosition.y = 0;
+	deltaCameraPosition.z = 0;
+
+	deltaCameraRotation.x = 0;
+	deltaCameraRotation.y = 0;
+	deltaCameraRotation.z = 0;
+}
+
+
+void Update(Window* w)
+{
+
+	MSG msg = { 0 };
+	while (msg.message != WM_QUIT)
+	{
+		UpdateInput();
+
+		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else
+		{
+			render.RunPipeLine();
+			BitBlt(w->hdc, 0, 0, windowWidth, windowHeight, w->screenHDC, 0, 0, SRCCOPY);
+			ShowFPS(w);
+		}
+	}
+
+}
