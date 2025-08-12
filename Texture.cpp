@@ -3,16 +3,16 @@
 #include "Tool.h"
 #include <windows.h>
 
-Texture::Texture()
-{
-	//?项目上配的是512，不明白，纹理信息都给到了1024 * 1024了，可能是制作人当时找的素材就是512 * 512的
-	width = 1024;
-	height = 1024;
-}
+//Texture::Texture()
+//{
+//	//?项目上配的是512，不明白，纹理信息都给到了1024 * 1024了，可能是制作人当时找的素材就是512 * 512的
+//	width = 512;
+//	height = 512;
+//}
 
-Texture::~Texture()
-{
-}
+//Texture::~Texture()
+//{
+//}
 
 void Texture::LoadTexture(const std::string& path)
 {
@@ -28,6 +28,8 @@ void Texture::LoadTexture(const std::string& path)
 	//配置设备上下文（这里使用内存设备
 	HDC hdc = CreateCompatibleDC(NULL);
 
+	SelectObject(hdc, bitmap);
+
 	//不应该先遍历height 然后遍历width么
 	//这里似乎有办法提高读取效率
 	for (int i = 0; i < height; i++)
@@ -38,9 +40,10 @@ void Texture::LoadTexture(const std::string& path)
 			int r = color % 256;
 			int g = (color >> 8) % 256;
 			int b = (color >> 16) % 256;
-			Color c((float)r / 256, (float)g / 256, (float)b / 256, 1);
-			//草，很好地解释了为什么色彩地设置值在0到256之间
-			this->textureData[i][j] = c;
+			int a = (color >> 24) % 256;
+			Color c(r, g, b, a);
+			//草，很好地解释了为什么色彩地设置值在0到255之间
+			this->textureData.UpdateBuffer(j, i, c);
 		}
 	}
 
@@ -48,8 +51,11 @@ void Texture::LoadTexture(const std::string& path)
 
 Color Texture::Sample(float u, float v) const
 {
-	u = Clamp(u, 0, 1.0);
-	v = Clamp(v, 0, 1.0);
+	int x = Clamp(u * width, 0, height - 1.0);
+	int y = Clamp(v * height, 0, width - 1.0);
 
-	return this->textureData[int(v * height)][int(u * width)];
+	//int y = max(0, int(v * height) - 1);
+	//int x = max(0, int(u * width) - 1);
+
+	return this->textureData.Sample(x, y);
 }
