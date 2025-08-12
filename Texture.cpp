@@ -3,16 +3,6 @@
 #include "Tool.h"
 #include <windows.h>
 
-//Texture::Texture()
-//{
-//	//?项目上配的是512，不明白，纹理信息都给到了1024 * 1024了，可能是制作人当时找的素材就是512 * 512的
-//	width = 512;
-//	height = 512;
-//}
-
-//Texture::~Texture()
-//{
-//}
 
 void Texture::LoadTexture(const std::string& path)
 {
@@ -42,7 +32,7 @@ void Texture::LoadTexture(const std::string& path)
 			int b = (color >> 16) % 256;
 			int a = (color >> 24) % 256;
 			Color c(r, g, b, a);
-			//草，很好地解释了为什么色彩地设置值在0到255之间
+			//很好地解释了为什么色彩地设置值在0到255之间
 			this->textureData.UpdateBuffer(j, i, c);
 		}
 	}

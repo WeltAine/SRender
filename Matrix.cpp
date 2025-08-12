@@ -3,17 +3,11 @@
 Matrix Matrix::Identity() {
 
 	Matrix tem;
-	//for (int i = 0; i < 4; i++) {
-	//	tem.matrix[i][i] = 1;
-	//}
+
 	return tem;
 }
 
-/// <summary>
-/// 产生一个单位矩阵
-/// </summary>
 Matrix::Matrix() {
-	//*this = Matrix::Identity();//和Identity触发递归调用了
 
 	for (int i = 0; i < 4; i++) {
 		this->matrix[i][i] = 1;
@@ -83,7 +77,7 @@ Matrix Matrix::operator*(const float value) const{
 }
 
 /// <summary>
-/// 产生一个新的转置矩阵，本体不受影响
+/// 杞疆
 /// </summary>
 /// <returns></returns>
 Matrix Matrix::Transpose() const {

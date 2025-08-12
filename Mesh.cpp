@@ -45,7 +45,7 @@ Matrix Mesh::GetObjectToWorld()
 
 void Mesh::SetObjectToWorld(const Matrix& m)
 {
-	this->transform.objectToWorld = m;//感觉不妥，不知道作者实际上是否真的用过该函数
+	this->transform.objectToWorld = m;
 }
 
 int Mesh::GetIndexSize()

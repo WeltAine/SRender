@@ -10,14 +10,8 @@ class Mesh {
 public:
 	Transform transform;//这个属性也就意味着mesh也是object
 
-	//！魔改
-	//std::vector<Vector3f> positionBuffer;
-	//std::vector<Vector3f> normalBuffer;
-	//std::vector<Vector2f> uvBuffer;
-	//？只有一个Vertex列表不行么，为什么还要这三个
-	std::vector<Vertex> vertexBuffer;//！顶点（这是自添）
-	//std::vector<Vector3i> indexBuffer;//组合索引， ？看了源码，一个Vector3i里头是位置，uv， 法线
-	std::vector<Vector3i> trangleIndexBuffer;//！魔改
+	std::vector<Vertex> vertexBuffer;//顶点
+	std::vector<Vector3i> trangleIndexBuffer;//位置，uv， 法线
 
 	Mesh();
 	~Mesh();

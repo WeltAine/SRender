@@ -16,14 +16,9 @@ Camera::Camera(const Transform& t, bool isPerspective, float aspect, float nearP
 	this->fov = fov;
 	this->isPerspective = isPerspective;
 
-	//cBuffer = new ColorBuffer{ 512, int(512 * aspect), this };
-	//zBuffer = new DepthBuffer{ 512, int(512 * aspect), this };
 	cBuffer = std::make_shared<ColorBuffer>(512, int(512 * aspect), this);
 	zBuffer = std::make_shared<DepthBuffer>(512, int(512 * aspect), this);
 
-
-	//cBuffer->aimCamera = this;
-	//zBuffer->aimCamera = this;
 };
 
 

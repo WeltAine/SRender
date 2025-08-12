@@ -45,13 +45,6 @@ Vertex::~Vertex()
 /// <returns></returns>
 Vertex Vertex::LerpVertex(const Vertex& v1, const Vertex& v2, float t)
 {
-	//·ÖÆçµã
-
-	//position.z = LerpFloat(v1.position.z, v2.position.z, t);
-	//color = Color::Lerp(left.color, right.color, t);
-	//uv.x = LerpFloat(left.uv.x, right.uv.x, t);
-	//uv.y = LerpFloat(left.uv.y, right.uv.y, t);
-	//normal = left.normal + (right.normal - left.normal) * t;
 
 	Vertex tem;
 	tem.position = v1.position * (1 - t) + v2.position * t;

@@ -2,27 +2,6 @@
 #include "Buffer.h"
 #include "Camera.h"
 
-//template<typename T>
-//void Buffer<T>::UpdateBuffer(int x, int y, T value) {
-//
-//	if (x >= width || x < 0 || y >= height || y < 0) {
-//		return;
-//	}
-//
-//	this->buffer[y * width + x] = value;
-//
-//}
-//
-//template<typename T>
-//void Buffer<T>::ResetBuffer(int width, int height) {
-//
-//	delete[] buffer;
-//
-//	this->width = width;
-//	this->height = height;
-//	buffer = new T[width * height];
-//
-//}
 
 DepthBuffer::DepthBuffer(int width, int height, Camera* aimCamera)
 	: Buffer{ width, height }, aimCamera{ aimCamera }
@@ -71,6 +50,7 @@ void DepthBuffer::ResetBuffer(int width, int height) {
 	if (this->aimCamera)
 		aimCamera->UpdateCamera(this->aimCamera->transform, this->aimCamera->isPerspective, width / float(height), this->aimCamera->nearPlane, this->aimCamera->farPlane, this->aimCamera->fov);
 }
+
 
 
 

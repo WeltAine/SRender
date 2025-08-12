@@ -21,24 +21,6 @@ public:
 	std::shared_ptr<ColorBuffer> cBuffer;
 
 	Camera(const Transform& t, bool isPerspective, float aspect, float nearPlane, float farPlane, float fov);
-	//	:
-	//	transform{ t }, 
-	//	v{LookAt(t.position, t.zAxis, t.yAxis)}, 
-	//	p{isPerspective ? Perspective(fov, aspect, nearPlane, farPlane) : Orthographic(fov, aspect, nearPlane, farPlane)} {
-	//
-	//	this->aspect = aspect;
-	//	this->nearPlane = nearPlane;
-	//	this->farPlane = farPlane;
-	//	this->fov = fov;
-	//	this->isPerspective = isPerspective;
-
-	//	cBuffer = new ColorBuffer{512, int(512 * aspect), this};
-	//	zBuffer = new DepthBuffer{512, int(512 * aspect), this};
-
-	//	//cBuffer->aimCamera = this;
-	//	//zBuffer->aimCamera = this;
-	//};
-
 
 
 	~Camera() {

@@ -15,7 +15,6 @@ Color::Color(const int& r, const int& g, const int& b, const int& a = 255)
 
 Color Color::operator+(const Color& rightColor) const
 {
-	//Color tem(this->r + rightColor.r, this->g + rightColor.g, this->b + rightColor.b, this->a + rightColor.a);
 	Color tem(this->r + rightColor.r, this->g + rightColor.g, this->b + rightColor.b, 255);
 
 	return tem;
@@ -23,7 +22,6 @@ Color Color::operator+(const Color& rightColor) const
 
 Color Color::operator+(const int& value) const
 {
-	//Color tem(this->r + value, this->g + value, this->b + value, this->a + value);
 	Color tem(this->r + value, this->g + value, this->b + value, 255);
 
 	return tem;
@@ -31,7 +29,6 @@ Color Color::operator+(const int& value) const
 
 Color Color::operator-(const Color& rightColor) const
 {
-	//Color tem(this->r - rightColor.r, this->g - rightColor.g, this->b - rightColor.b, this->a - rightColor.a);
 	Color tem(this->r - rightColor.r, this->g - rightColor.g, this->b - rightColor.b, 255);
 
 	return tem;
@@ -39,7 +36,6 @@ Color Color::operator-(const Color& rightColor) const
 
 Color Color::operator-(const int& value) const
 {
-	//Color tem(this->r - value, this->g - value, this->b - value, this->a - value);
 	Color tem(this->r - value, this->g - value, this->b - value, 255);
 
 	return tem;
@@ -47,7 +43,6 @@ Color Color::operator-(const int& value) const
 
 Color Color::operator*(const Color& rightColor) const
 {
-	//Color tem(this->r * rightColor.r, this->g * rightColor.g, this->b * rightColor.b, this->a * rightColor.a);
 	Color tem(this->r * rightColor.r, this->g * rightColor.g, this->b * rightColor.b, 255);
 
 	return tem;
@@ -55,7 +50,6 @@ Color Color::operator*(const Color& rightColor) const
 
 Color Color::operator*(const float& value) const
 {
-	//Color tem(this->r * value, this->g * value, this->b * value, this->a * value);
 	Color tem(this->r * value, this->g * value, this->b * value, 255);
 
 	return tem;
@@ -63,7 +57,6 @@ Color Color::operator*(const float& value) const
 
 Color Color::operator/(const Color& rightColor) const
 {
-	//Color tem(this->r / rightColor.r, this->g / rightColor.g, this->b / rightColor.b, this->a / rightColor.a);
 	Color tem(this->r / rightColor.r, this->g / rightColor.g, this->b / rightColor.b, 255);
 
 	return tem;
@@ -71,7 +64,6 @@ Color Color::operator/(const Color& rightColor) const
 
 Color Color::operator/(const float& value) const
 {
-	//Color tem(this->r / value, this->g / value, this->b / value, this->a / value);
 	Color tem(this->r / value, this->g / value, this->b / value, 255);
 
 	return tem;
@@ -92,7 +84,6 @@ Color Color::Lerp(const Color& c1, const Color& c2, const float& t)
 
 bool Color::operator==(const Color& aim) const
 {
-	//return this->r == aim.r && this->g == aim.g && this->b == aim.b && this->a == aim.a;
 	return this->r == aim.r && this->g == aim.g && this->b == aim.b;
 }
 
