@@ -4,275 +4,6 @@
 #include <iostream>
 #include "libbmp.h"
 
-namespace ordRender {
-	//Renderer::Renderer(HDC inScreenHDC, int inDeviceWidth, int inDeviceHeight, Camera* cam)
-	//	: screenHDC(inScreenHDC), deviceWidth(inDeviceWidth), deviceHeight(inDeviceHeight), camera(cam)
-	//{
-
-	//	//看了一眼引用，完全没用到过
-	//	//texture = new Texture();
-	//	//texture->LoadTexture("gezi.bmp");//！！！纹理路径，记得填
-
-	//}
-
-
-	//Renderer::~Renderer()
-	//{
-
-	//}
-
-	//void Renderer::DrawMesh(Mesh& aimMesh, IShader* shader, DepthBuffer* zBuffer)
-	//{
-	//	if (aimMesh.vertexBuffer.size() > 0) {
-
-	//		DrawByIndex(aimMesh, shader, zBuffer);
-
-	//	}
-	//	return;
-	//}
-
-
-
-	//void Renderer::DrawByIndex(Mesh& aimMesh, IShader* shader, DepthBuffer* zBuffer)
-	//{
-	//	//for (int i = 0; i < aimMesh.vertexBuffer.size(); i += 3) {
-
-	//	//	Vertex& v0 = aimMesh.vertexBuffer[i];
-	//	//	Vertex& v1 = aimMesh.vertexBuffer[i + 1];
-	//	//	Vertex& v2 = aimMesh.vertexBuffer[i + 2];
-
-	//	//	RasterizeTrangle(v0, v1, v2, shader, zBuffer);
-	//	//}
-
-
-	//	for (int i = 0; i < aimMesh.trangleIndexBuffer.size(); i++) {
-
-	//		Vertex& v0 = aimMesh.vertexBuffer[aimMesh.trangleIndexBuffer[i].x];
-	//		Vertex& v1 = aimMesh.vertexBuffer[aimMesh.trangleIndexBuffer[i].y];
-	//		Vertex& v2 = aimMesh.vertexBuffer[aimMesh.trangleIndexBuffer[i].z];
-
-	//		RasterizeTrangle(v0, v1, v2, shader, zBuffer);
-
-
-	//		{
-
-	//			BmpImg img(1000, 1000);
-
-	//			for (int y = 0, x; y < 1000; y++)
-	//			{
-	//				for (x = 0; x < 1000; x++)
-	//				{
-	//					float _color = zBuffer->depthBuffer[y * 1000 + x] >= 250 ? 1 : zBuffer->depthBuffer[y * 1000 + x];
-
-	//					int color = int(_color * 255);
-
-	//					img.set_pixel(x, y, color, color, color);
-	//				}
-	//			}
-
-	//			img.write("shadow.bmp");
-	//		}
-
-
-
-	//		//{
-
-	//		//	BmpImg img(1000, 1000);
-
-	//		//	for (int y = 0, x; y < 1000; y++)
-	//		//	{
-	//		//		for (x = 0; x < 1000; x++)
-	//		//		{
-	//		//			float _color = zBuffer->depthBuffer[y * 1000 + x] >= 250 ? 1 : zBuffer->depthBuffer[y * 1000 + x];
-
-	//		//			int color = this->screenHDC;
-
-	//		//			img.set_pixel(x, y, color, color, color);
-	//		//		}
-	//		//	}
-
-	//		//	img.write("shadow.bmp");
-	//		//}
-
-
-	//	}
-
-
-
-	//}
-
-	//void Renderer::RasterizeTrangle(Vertex& v0, Vertex& v1, Vertex& v2, IShader* shader, DepthBuffer* zBuffer)
-	//{
-	//	//拷贝，以防止篡改mash中的顶点（mash中的顶点永远是模型空间）
-	//	Vertex _v0 = v0, _v1 = v1, _v2 = v2;
-
-	//	shader->VS(_v0, _v1, _v2);//以完成mvp(未标准化，矫正需要观察空间下的Z值)，并且完成了绘制上下三角形所需的排序//参数会同步改变
-
-
-	//	//齐次除法的屏幕映射(未调整w)//但这一次Uniform不会同步
-	//	PrepareRasterization(_v0, zBuffer);
-	//	PrepareRasterization(_v1, zBuffer);
-	//	PrepareRasterization(_v2, zBuffer);
-
-
-
-	//	if (_v2.position.y == _v1.position.y) {
-
-	//		DrawBottomTriangle(_v0, _v1, _v2, shader, zBuffer, _v2);
-
-	//	}
-	//	else if (_v0.position.y == _v1.position.y) {
-
-	//		DrawTopTriangle(_v0, _v1, _v2, shader, zBuffer, _v0);
-
-	//	}
-	//	else {
-
-	//		//MVP三个变换都是线性的，这导致关系（即比例）一定是固化的，即那个未齐次除法的中间结果一定也是固化的比例
-	//		float m = (_v2.position.y - _v1.position.y) / (_v2.position.y - _v0.position.y);
-	//		Vertex _v = Vertex::LerpVertex(_v2, _v0, m);//一个屏幕空间中的空间点，只有position中的xy是有意义的
-
-	//		//很容易理解，在MV阶段，比例关系必然不变（因为空间变换总是线性的）
-	//		//但P令我犹豫了，尽管它也是线性的，但是那个w带来了一些不必要的顾虑，因为两个点在某个轴投影上相同，或者保持比例，那么任何线性变换后，在该轴投影上的比例还是保持一致的
-	//		//但是注意，是“轴”，空间在线性变换后，空间的基准轴往往就不再能够通过单个维度表达，而是多个维度，更像一个向量
-	//		//简单来说，单个维度上的值的比例关系已经失真
-	//		//而对每个向量的齐次除法从空间来看是一个非线性的变换
-	//		//。。。
-
-	//		DrawTopTriangle(_v0, _v1, _v2, shader, zBuffer, _v);
-	//		DrawBottomTriangle(_v0, _v1, _v2, shader, zBuffer, _v);
-
-	//	}
-
-
-
-	//}
-
-	////对参数同步改变
-	//void Renderer::PrepareRasterization(Vertex& vertex, DepthBuffer* zBuffer)
-	//{
-
-	//	//促使位置向纹理Buffer的大小同步
-	//	vertex.position.x = ((vertex.position.x / vertex.position.w) + 0.5) * (zBuffer->width - 1);
-	//	vertex.position.y = ((vertex.position.y / vertex.position.w) + 0.5) * (zBuffer->height - 1);
-	//	vertex.position.z = vertex.position.z / vertex.position.w;
-	//	//w无需变化,留下有用
-
-	//}
-
-	//void Renderer::DrawTopTriangle(Vertex& v0, Vertex& v1, Vertex& v2, IShader* shader, DepthBuffer* zBuffer, Vertex& interpolateVertex)
-	//{
-	//	//流程是，确定像素覆盖情况，然后将直线两端对应的
-
-	//	if (abs(v1.position.y - v2.position.y) < 1) {
-	//		return;
-	//	}
-
-	//	for (int y = interpolateVertex.position.y + 0.5; y <= int(v2.position.y - 0.5); y++) {
-
-	//		float n = (v2.position.y - y) / (v2.position.y - interpolateVertex.position.y);
-	//		Vertex temVertex_1 = Vertex::LerpVertex(v2, v1, n);
-	//		Vertex temVertex_2 = Vertex::LerpVertex(v2, interpolateVertex, n);
-	//		//这些点的位置未经过矫正，只有xy是正确的
-
-
-	//		DrawLine(temVertex_1, temVertex_2, shader, zBuffer, v0.position, v1.position, v2.position);
-
-	//	}
-	//}
-
-	//void Renderer::DrawBottomTriangle(Vertex& v0, Vertex& v1, Vertex& v2, IShader* shader, DepthBuffer* zBuffer, Vertex& interpolateVertex)
-	//{
-	//	if (abs(v1.position.y - v0.position.y) < 1) {
-	//		return;
-	//	}
-
-	//	for (int y = interpolateVertex.position.y - 0.5; y >= int(v0.position.y + 0.5); y--) {
-
-	//		float n = (v0.position.y - y) / (v0.position.y - interpolateVertex.position.y);
-	//		Vertex temVertex_1 = Vertex::LerpVertex(v0, v1, n);
-	//		Vertex temVertex_2 = Vertex::LerpVertex(v0, interpolateVertex, n);
-	//		//这些点的位置未经过矫正，只有xy是正确的
-
-
-	//		DrawLine(temVertex_1, temVertex_2, shader, zBuffer, v0.position, v1.position, v2.position);
-
-	//	}
-	//}
-
-	//void Renderer::DrawLine(Vertex& aimVertex_1, Vertex& aimVertex_2, IShader* shader, DepthBuffer* zBuffer, Vector3f& v0, Vector3f& v1, Vector3f& v2)
-	//{
-	//	Vertex leftVertex = (aimVertex_1.position.x > aimVertex_2.position.x) ? aimVertex_2 : aimVertex_1;
-	//	Vertex rightVertex = (aimVertex_1.position.x > aimVertex_2.position.x) ? aimVertex_1 : aimVertex_2;
-
-	//	leftVertex.position.x = int(leftVertex.position.x - 0.5);
-	//	rightVertex.position.x = int(rightVertex.position.x + 0.5);
-	//	//这条直线间就是可着色范围（包括端点），两者刚好对应两个在位图中的像素索引
-
-	//	if (abs(leftVertex.position.x - rightVertex.position.x) < 1) {
-	//		return;
-	//	}
-
-	//	for (int x = leftVertex.position.x; x <= rightVertex.position.x; x++) {
-	//		Vertex rendererVertex;
-	//		rendererVertex.position.x = x; rendererVertex.position.y = leftVertex.position.y + 0.001f;//做一点矫正，有时可能会出现一点误差，比如预期343变成了342.999969
-
-	//		//抽象的来说，FS之前的插值结果就是未校正的比例（当然仅对透视）
-	//		Vector3f interpolation = CenterOfGravity_Projector(v0, v1, v2, rendererVertex.position);
-
-	//		//虽然FS中的Uniform还停留在MVP这个阶段，但没关系，因为质心坐标才是最重要的
-	//		//!!!（待更改）要将FS置于外层使用才行
-	//		if (shader->FS(rendererVertex, interpolation))
-	//			//产生必要的插值信息与最终该像素的颜色结果，并且确定是否在某个光源的阴影纹理中可见（就我了解的FS，这里它明显承担了一部分三角形遍历和设置的工作)
-	//		{
-	//			float depth = (rendererVertex.position.z / rendererVertex.position.w) - 0.5f;//将Z调整到0与-1之间
-	//			if (ZTestAndWrite(rendererVertex.position.x, rendererVertex.position.y, depth, zBuffer))//！！！我突然意识到一个事情，这里的zBuffer真的是用来确定遮挡关系的，但Shader中的那个确实光源的
-	//			{
-	//				bool B = dynamic_cast<PhongShader*>(shader);
-	//				if (B) {//PhongShader才允许执行对位图设置像素的功能
-
-	//					int pixelX = (rendererVertex.position.x / (zBuffer->width - 1)) * (this->deviceWidth - 1);
-	//					int pixelY = (rendererVertex.position.y / (zBuffer->height - 1)) * (this->deviceHeight - 1);
-
-	//					if (pixelX >= 0 && pixelX < this->deviceWidth && pixelY >= 0 && pixelY < this->deviceHeight) {
-	//						DrawPixel(pixelX, pixelY, rendererVertex.color);//记得从纹理的屏幕坐标映射回设备屏幕坐标
-	//					}
-
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
-
-	//void Renderer::DrawPixel(int x, int y, Color color)
-	//{
-	//	SetPixel(screenHDC, x, y, RGB(255 * color.r, 255 * color.g, 255 * color.b));
-	//}
-
-	//bool Renderer::ZTestAndWrite(int x, int y, float depth, DepthBuffer* zbuffer)
-	//{
-	//	float sample = zbuffer->Sample(x, y);
-	//	bool tem = zbuffer->Sample(x, y) < depth;
-
-	//	if (tem) {
-	//		int index = y * zbuffer->width + x;
-	//		zbuffer->depthBuffer[index] = depth;
-	//		return true;
-	//	}
-
-	//	return false;
-	//}
-
-	//void Renderer::Clear(DepthBuffer* buffer)
-	//{
-	//	for (int y = 0; y < buffer->height; y++) {
-	//		for (int x = 0; x < buffer->width; x++) {
-	//			buffer->depthBuffer[y * buffer->width + x] = -1;
-	//		}
-	//	}
-
-	//}
-}
 
 namespace newRender {
 
@@ -288,7 +19,7 @@ namespace newRender {
 		tem.matrix[2][3] = 1.0;
 
 
-		for (Vector3f ndcPoint : this->renderDate.ndcPositions) {
+		for (Vector3f& ndcPoint : this->renderDate.ndcPositions) {
 			this->renderDate.screenPositions.push_back(tem * ndcPoint);
 		}
 
@@ -494,12 +225,16 @@ namespace newRender {
 
 	void Render::RunPipeLine() {
 
+
 		int lightIndex = 0;
 
 		//处理光源，得到光源的深度纹理
 		for (Light* currentLight : this->renderDate.lights) {
 
 			this->SetCurrentCamera(currentLight);
+			//刷新缓存
+			this->currentCamera->zBuffer->Buffer::ResetBuffer();
+			this->currentCamera->cBuffer->Buffer::ResetBuffer();
 
 			int meshIndex = 0;
 			//逐模型
@@ -532,29 +267,35 @@ namespace newRender {
 				meshIndex++;
 			}
 
-			{
-				BmpImg img(512, 512);
 
-				for (int y = 0, x; y < 512; y++)
-				{
-					for (x = 0; x < 512; x++)
-					{
-						Color _color = this->currentCamera->cBuffer->Sample(x, 511- y);
-
-						img.set_pixel(x, y, _color.r, _color.g, _color.b);
-					}
-				}
-
-				std::string name = std::string("shadow_") + std::to_string(lightIndex) + std::string(".bmp");
-
-				img.write(name);
-			}
+			//光源深度纹理图像
+			
+			//{
+			//	BmpImg img(512, 512);
+			//
+			//	for (int y = 0, x; y < 512; y++)
+			//	{
+			//		for (x = 0; x < 512; x++)
+			//		{
+			//			Color _color = this->currentCamera->cBuffer->Sample(x, 511- y);
+			//
+			//			img.set_pixel(x, y, _color.r, _color.g, _color.b);
+			//		}
+			//	}
+			//
+			//	std::string name = std::string("shadow_") + std::to_string(lightIndex) + std::string(".bmp");
+			//
+			//	img.write(name);
+			//}
 
 			lightIndex++;
 		}
 
 
 		this->SetCurrentCamera(this->renderDate.mainCamera);
+		//刷新缓存
+		this->currentCamera->zBuffer->Buffer::ResetBuffer();
+		this->currentCamera->cBuffer->Buffer::ResetBuffer();
 
 		int meshIndex = 0;
 
@@ -586,46 +327,56 @@ namespace newRender {
 
 		}
 
+		//主相机深度纹理
+
+		//{
+		//	BmpImg img(512, 512);
+		//
+		//	for (int y = 0, x; y < 512; y++)
+		//	{
+		//		for (x = 0; x < 512; x++)
+		//		{
+		//			float z = this->currentCamera->zBuffer->Sample(x, 511 - y);
+		//
+		//			Color temColor = Color::white * ((this->currentCamera->farPlane - (z - 0.1)) / (this->currentCamera->farPlane - this->currentCamera->nearPlane));
+		//			img.set_pixel(x, y, temColor.r, temColor.g, temColor.b);
+		//		}
+		//	}
+		//
+		//	img.write("z.bmp");
+		//}
+
+		//最终图像
+		
 		{
 			BmpImg img(512, 512);
-
-			for (int y = 0, x; y < 512; y++)
-			{
-				for (x = 0; x < 512; x++)
-				{
-					float z = this->currentCamera->zBuffer->Sample(x, 511 - y);
-
-					Color temColor = Color::white * ((this->currentCamera->farPlane - (z - 0.1)) / (this->currentCamera->farPlane - this->currentCamera->nearPlane));
-					img.set_pixel(x, y, temColor.r, temColor.g, temColor.b);
-				}
-			}
-
-			img.write("z.bmp");
-		}
-
-		{
-			BmpImg img(512, 512);
-
+		
 			for (int y = 0, x; y < 512; y++)
 			{
 				for (x = 0; x < 512; x++)
 				{
 					Color temColor = this->currentCamera->cBuffer->Sample(x, 511 - y);
-
+		
 					img.set_pixel(x, y, temColor.r, temColor.g, temColor.b);
 				}
 			}
-
+		
 			img.write("color.bmp");
 		}
 
+		for (int y = 0; y < this->renderDate.mainCamera->cBuffer->height; y++) {
 
+			for (int x = 0; x < this->renderDate.mainCamera->cBuffer->width; x++) {
+
+				DrawPixel(x, this->renderDate.mainCamera->cBuffer->height - y - 1, this->renderDate.mainCamera->cBuffer->Sample(x, y));
+			}
+		}
 
 	}
 
 	void Render::DrawPixel(int x, int y, Color color) {
 
-		SetPixel(screenHDC, x, y, RGB(255 * color.r, 255 * color.g, 255 * color.b));
+		SetPixel(screenHDC, x, y, RGB(color.r, color.g, color.b));
 
 	}
 
