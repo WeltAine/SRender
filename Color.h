@@ -5,16 +5,16 @@
 class Color {
 
 public:
-	float r, g, b, a;
+	int r, g, b, a;
 
 	Color();
-	Color(const float& r, const float& g, const float& b, const float& a);
+	Color(const int& r, const int& g, const int& b, const int& a);
 
 	Color operator + (const Color& rightColor) const;
-	Color operator + (const float& value) const;
+	Color operator + (const int& value) const;
 
 	Color operator - (const Color& rightColor) const;
-	Color operator - (const float& value) const;
+	Color operator - (const int& value) const;
 
 	Color operator * (const Color& rightColor) const;
 	Color operator * (const float& value) const;
@@ -24,7 +24,7 @@ public:
 
 	static Color Lerp(const Color& c1, const Color& c2, const float& t);
 
-	static Color white;
+	static Color white, black;
 
 	bool operator == (const Color& aim) const;
 };
