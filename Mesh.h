@@ -8,7 +8,7 @@
 class Mesh {
 
 public:
-	Transform transform;
+	Transform transform;//这个属性也就意味着mesh也是object
 
 	//！魔改
 	//std::vector<Vector3f> positionBuffer;
