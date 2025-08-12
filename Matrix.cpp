@@ -9,7 +9,9 @@ Matrix Matrix::Identity() {
 	return tem;
 }
 
-
+/// <summary>
+/// 产生一个单位矩阵
+/// </summary>
 Matrix::Matrix() {
 	//*this = Matrix::Identity();//和Identity触发递归调用了
 
@@ -21,6 +23,16 @@ Matrix::Matrix() {
 
 Matrix::~Matrix() {
 
+}
+
+Matrix Matrix::operator+(const Matrix& rightMatrix) const{
+	Matrix tem;
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			tem.matrix[y][x] = this->matrix[y][x] + rightMatrix.matrix[y][x];
+		}
+	}
+	return tem;
 }
 
 Matrix Matrix:: operator - (const Matrix& rightMatrix) const{
@@ -70,16 +82,10 @@ Matrix Matrix::operator*(const float value) const{
 	return tem;
 }
 
-Matrix Matrix::operator+(const Matrix& rightMatrix) const{
-	Matrix tem;
-	for (int y = 0; y < 4; y++) {
-		for (int x = 0; x < 4; x++) {
-			tem.matrix[y][x] = this->matrix[y][x] + rightMatrix.matrix[y][x];
-		}
-	}
-	return tem;
-}
-
+/// <summary>
+/// 产生一个新的转置矩阵，本体不受影响
+/// </summary>
+/// <returns></returns>
 Matrix Matrix::Transpose() const {
 	Matrix tem;
 	for (int y = 0; y < 4; y++) {
@@ -119,3 +125,4 @@ void Matrix::Print() const {
 	std::cout << "-----------------Matrix End----------------" << std::endl;
 
 }
+

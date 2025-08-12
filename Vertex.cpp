@@ -5,13 +5,27 @@ Vertex::Vertex()
 {
 }
 
+
+/// <summary>
+/// inPos原样记录，inNor会自己做归一化处理，并保证w = 0
+/// </summary>
+/// <param name="inPos"></param>
+/// <param name="inNor"></param>
+/// <param name="inColor"></param>
+/// <param name="inUV"></param>
 Vertex::Vertex(const Vector3f& inPos, const Vector3f& inNor, const Color& inColor, const Vector2f& inUV)
-	:position(inPos), normal(normal), color(inColor), uv(inUV)
+	:position(inPos), normal(inNor), color(inColor), uv(inUV)
 {
 	normal.Normalize();
 	normal.w = 0;
 }
 
+/// <summary>
+/// inPos原样记录，0向量法线
+/// </summary>
+/// <param name="inPos"></param>
+/// <param name="inColor"></param>
+/// <param name="inUV"></param>
 Vertex::Vertex(const Vector3f& inPos, const Color& inColor, const Vector2f& inUV)
 	:position(inPos), normal(0, 0, 0, 0), color(inColor), uv(inUV)
 {
@@ -21,6 +35,14 @@ Vertex::~Vertex()
 {
 }
 
+
+/// <summary>
+/// 在v1与v2之间，对各个属性对之间t%位置上的值
+/// </summary>
+/// <param name="v1"></param>
+/// <param name="v2"></param>
+/// <param name="t"></param>
+/// <returns></returns>
 Vertex Vertex::LerpVertex(const Vertex& v1, const Vertex& v2, float t)
 {
 	//分歧点
@@ -39,11 +61,17 @@ Vertex Vertex::LerpVertex(const Vertex& v1, const Vertex& v2, float t)
 	return tem;
 }
 
+
+/// <summary>
+/// 结果会直接写入this，注意不要用该方法发生非均匀变化（平移是可以的）
+/// </summary>
+/// <param name="h"></param>
+/// <returns></returns>
 Vertex& Vertex::operator*(const Matrix& h)//一般是矩阵乘以向量，但这个使用就反过来了，最终我选择以友元的方式在Vertex中重载*运算来解决这个问题
 {
 	this->position = h * this->position;
 	this->normal = (h * this->normal).Normalized();//这里的处理是不够的，因为对于法向量的处理是要乘以h的逆转置矩阵的//https://zhuanlan.zhihu.com/p/72734738
-	//所以这个暂时只能应对均匀缩放的形变
+	//所以这个暂时只能应对均匀缩放，旋转和平移的形变
 
 	return *this;
 }
@@ -79,9 +107,10 @@ void Vertex::Print()
 
 }
 
-
+///结果会直接写入this
 //友元函数，实现M * V，而不是V * M
 Vertex& operator*(Matrix& leftMatrix, Vertex& rightVertex)//！自添
 {
-	return rightVertex* leftMatrix;
+
+	return rightVertex * leftMatrix;
 }

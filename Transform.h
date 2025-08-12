@@ -14,11 +14,12 @@ public:
 	Vector3f scale;//比例
 	//这三者为模型的初态记录
 
+	//三个单位轴向
 	Vector3f xAxis = Vector3f(1, 0, 0, 0);
 	Vector3f yAxis = Vector3f(0, 1, 0, 0);
 	Vector3f zAxis = Vector3f(0, 0, 1, 0);
 
-	Matrix objectToWorld;//记录所有的变换
+	Matrix objectToWorld;//记录所有的变换，M
 
 	Transform();
 	Transform(const Vector3f& pos, const Vector3f& rot, const Vector3f& s);
@@ -34,9 +35,9 @@ public:
 	Matrix Scale(const Vector3f& scale);
 
 
-	void GetXAxis();
-	void GetYAxis();
-	void GetZAxis();
+	Vector3f UpdateXAxis();
+	Vector3f UpdateYAxis();
+	Vector3f UpdateZAxis();
 
 
 };

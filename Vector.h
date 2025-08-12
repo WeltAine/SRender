@@ -21,10 +21,14 @@ public:
 	Vector3<T> operator - (const Vector3<T>& otherVector3) const;
 	Vector3<T> operator * (float value) const;
 	Vector3<T> operator / (float value) const;
+	static Vector3<T> LerpVector3(const Vector3<T>& p1, const Vector3<T>& p2, float t);
 
+
+	//点积
 	float Dot(const Vector3<T>& rightVector3) const;
 	static float Dot(const Vector3<T>& leftVector3, const Vector3<T>& rightVebtor3);
 
+	//叉积
 	Vector3<T> Cross(const Vector3<T>& rightVector3) const;
 	static Vector3<T> Cross(const Vector3<T>& leftVector3, const Vector3<T>& rightVector3);
 
@@ -35,7 +39,8 @@ public:
 	Vector3<T>& Normalize();
 	Vector3<T> Normalized() const;
 
-	void Standardization() {
+	//这是Vector中唯一一个改变w的方法
+	Vector3& Standardization() {
 		if (w != 0) {
 
 			this->x = x / w;
@@ -43,6 +48,8 @@ public:
 			this->z = z / w;
 			this->w = 1;
 		}
+
+		return *this;
 	};
 
 	template<typename U>
@@ -98,7 +105,7 @@ Vector3<T> Vector3<T>::operator*(float value) const
 	T _x = this->x * value;
 	T _y = this->y * value;
 	T _z = this->z * value;
-	return Vector3<T>(_x, _y, _z);
+	return Vector3<T>(_x, _y, _z, this->w);
 }
 
 template<typename T>
@@ -107,36 +114,41 @@ Vector3<T> Vector3<T>::operator/(float value) const
 	T _x = this->x / value;
 	T _y = this->y / value;
 	T _z = this->z / value;
-	return Vector3<T>(_x, _y, _z);
+	return Vector3<T>(_x, _y, _z, this->w);
+}
+
+template<typename T>
+Vector3<T> Vector3<T>::LerpVector3(const Vector3<T>& p1, const Vector3<T>& p2, float t) {
+	return (p1 * (1 - t)) + (p2 * t);
 }
 
 template<typename T>
 float Vector3<T>::Dot(const Vector3<T>& rightVector3) const
 {
-	return this->x * rightVector3.x + this->y * rightVector3.y + this->z * rightVector3.z;
+	return (this->x * rightVector3.x + this->y * rightVector3.y + this->z * rightVector3.z);
 }
 
 template<typename T>
-float Vector3<T>::Dot(const Vector3<T>& leftVector3, const Vector3<T>& rightVebtor3)
+float Vector3<T>::Dot(const Vector3<T>& leftVector3, const Vector3<T>& rightVector3)
 {
-	return leftVector3.x * rightVebtor3.x + leftVector3.y * rightVebtor3.y + leftVector3.z * rightVebtor3.z;
+	return (leftVector3.x * rightVector3.x + leftVector3.y * rightVector3.y + leftVector3.z * rightVector3.z);
 }
 
 template<typename T>
 Vector3<T> Vector3<T>::Cross(const Vector3<T>& rightVector3) const
 {
-	T _x = this->y * rightVector3.z - this->z * rightVector3.y;
-	T _y = this->z * rightVector3.x - this->x * rightVector3.z;
-	T _z = this->x * rightVector3.y - this->y * rightVector3.x;
+	T _x = (this->y * rightVector3.z - this->z * rightVector3.y);
+	T _y = (this->z * rightVector3.x - this->x * rightVector3.z);
+	T _z = (this->x * rightVector3.y - this->y * rightVector3.x);
 	return Vector3<T>(_x, _y, _z);
 }
 
 template<typename T>
 Vector3<T> Vector3<T>::Cross(const Vector3<T>& leftVector3, const Vector3<T>& rightVector3)
 {
-	T _x = leftVector3.y * rightVector3.z - leftVector3.z * rightVector3.y;
-	T _y = leftVector3.z * rightVector3.x - leftVector3.x * rightVector3.z;
-	T _z = leftVector3.x * rightVector3.y - leftVector3.y * rightVector3.x;
+	T _x = (leftVector3.y * rightVector3.z - leftVector3.z * rightVector3.y);
+	T _y = (leftVector3.z * rightVector3.x - leftVector3.x * rightVector3.z);
+	T _z = (leftVector3.x * rightVector3.y - leftVector3.y * rightVector3.x);
 	return Vector3<T>(_x, _y, _z);
 }
 
@@ -170,13 +182,15 @@ template<typename T>
 template<typename U>
 inline bool Vector3<T>::operator==(const Vector3<U>& aim) const
 {
+	//复制
 	Vector3<T> tem_1 = *this;
 	Vector3<U> tem_2 = aim;
 
+	//齐次化
 	tem_1.Standardization();
 	tem_2.Standardization();
 
-	return tem_1.x == tem_2.x && tem_1.y == tem_2.y && tem_1.z == tem_2.z && tem_1.w == tem_2.w;
+	return tem_1.x == tem_2.x && tem_1.y == tem_2.y && tem_1.z == tem_2.z;
 }
 
 
@@ -275,8 +289,8 @@ template<typename T>
 Vector2<T> Vector2<T>::operator-(const T& value) const {
 	Vector2 tem;
 
-	tem.x = this->x + value;
-	tem.y = this->y + value;
+	tem.x = this->x - value;
+	tem.y = this->y - value;
 
 	return tem;
 }
@@ -285,8 +299,8 @@ template<typename T>
 Vector2<T> Vector2<T>::operator*(const T& value) const {
 	Vector2 tem;
 
-	tem.x = this->x + value;
-	tem.y = this->y + value;
+	tem.x = this->x * value;
+	tem.y = this->y * value;
 
 	return tem;
 }
@@ -295,8 +309,8 @@ template<typename T>
 Vector2<T> Vector2<T>::operator/(const T& value) const {
 	Vector2 tem;
 
-	tem.x = this->x + value;
-	tem.y = this->y + value;
+	tem.x = this->x / value;
+	tem.y = this->y / value;
 
 	return tem;
 }

@@ -3,7 +3,12 @@
 #include <map>
 #include <cstdlib>
 
-//字符串拆解
+/// <summary>
+/// 字符串拆解，会自己清理字符向量
+/// </summary>
+/// <param name="s"></param>
+/// <param name="splitchar"></param>
+/// <param name="vec"></param>
 void StringSplit(std::string s, char splitchar, std::vector<std::string>& vec)
 {
 	vec.clear();
@@ -43,6 +48,11 @@ void ReadObjFile(std::string path, Mesh* obj)
 	std::vector<Vector3f> normalBuffer;
 	std::vector<Vector2f> uvBuffer;
 
+	group.reserve(5);
+	positionBuffer.reserve(240);
+	normalBuffer.reserve(240);
+	uvBuffer.reserve(240);
+
 	std::map<Vertex, int> vertexBuffer;
 
 	if (in) {
@@ -59,7 +69,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 				StringSplit(line, ' ', group);
 
 				Vector3f tem(std::stof(group[0]), std::stof(group[1]), std::stof(group[2]));
-				positionBuffer.push_back( tem );
+				positionBuffer.emplace_back( tem );
 
 			}
 			else if(prefix == "vt") {
@@ -68,7 +78,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 				StringSplit(line, ' ', group);
 
 				Vector2f tem(std::stof(group[0]), std::stof(group[1]));
-				uvBuffer.push_back(tem);
+				uvBuffer.emplace_back(tem);
 
 			}
 			else if (prefix == "vn") {
@@ -77,7 +87,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 				StringSplit(line, ' ', group);
 
 				Vector3f tem(std::stof(group[0]), std::stof(group[1]), std::stof(group[2]), 0);
-				normalBuffer.push_back(tem);
+				normalBuffer.emplace_back(tem);
 
 			}
 			else if (prefix == "f") {
@@ -107,7 +117,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 							trangleIndex[i] = vertexBuffer.size();
 							vertexBuffer.insert(std::pair<Vertex, int>(tem, trangleIndex[i]));
 
-							obj->vertexBuffer.push_back(tem);
+							obj->vertexBuffer.emplace_back(tem);
 
 						}
 						else {
@@ -135,12 +145,15 @@ void ReadObjFile(std::string path, Mesh* obj)
 
 						Vertex tem(positionBuffer[positionIndex], normalBuffer[normalIndex], Color::white, uvBuffer[uvIndex]);
 
+
+						
 						if (vertexBuffer.find(tem) == vertexBuffer.end()) {
 
-							trangleIndex[i] = vertexBuffer.size();
-							vertexBuffer.insert(std::pair<Vertex, int>(tem, trangleIndex[i]));
+							//如果是新的顶点
+							trangleIndex[i] = vertexBuffer.size();//顺序新增编号
+							vertexBuffer.insert(std::pair<Vertex, int>(tem, trangleIndex[i]));//载入map
 
-							obj->vertexBuffer.push_back(tem);
+							obj->vertexBuffer.push_back(tem);//载入mesh
 
 						}
 						else {

@@ -1,9 +1,12 @@
 #include "Mesh.h"
 
-Mesh::Mesh()
+/// <summary>
+/// 预开辟240个顶点，80对索引
+/// </summary>
+Mesh::Mesh() : transform{}
 {
-	trangleIndexBuffer.reserve(500);
-	vertexBuffer.reserve(1500);
+	trangleIndexBuffer.reserve(80);
+	vertexBuffer.reserve(240);
 }
 
 Mesh::~Mesh()

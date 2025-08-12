@@ -2,6 +2,8 @@
 
 #include "Vector.h"
 
+class Vertex;
+
 class Matrix {
 
 public:
@@ -10,7 +12,7 @@ public:
 	Matrix();
 	~Matrix();
 
-	
+	//都是返回一个新的矩阵。不会更改原来的矩阵
 	Matrix operator + (const Matrix& rightMatrix) const;
 	Matrix operator - (const Matrix& rightMatrix) const;
 	Matrix operator * (const Matrix& rightMatrix) const;
@@ -26,3 +28,6 @@ public:
 	void Print() const;
 
 };
+
+//Vertex operator * (const Matrix& leftMatrix, const Vertex& rightVertex);
+

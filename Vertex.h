@@ -6,7 +6,7 @@
 #include "MyMath.h"
 
 class Vertex {
-
+public:
 	friend Vertex& operator * (Matrix& leftMatrix, Vertex& rightVertex);
 	
 
@@ -32,3 +32,5 @@ public:
 	void Print();
 
 };
+
+Vertex& operator * (Matrix& leftMatrix, Vertex& rightVertex);
