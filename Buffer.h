@@ -1,45 +1,82 @@
 #pragma once
 
 #include "MyMath.h"
-
+#include "Color.h"
+//#include "Camera.h"
 //缓存和深度缓存的纹理
 
+class Camera;
+
+template<typename T>
 struct Buffer {
 	int width, height;
-};
+	T* buffer;
 
-struct DepthBuffer : Buffer {
+	Buffer(int width = 512, int height = 512) : width{ width }, height{ height }, buffer{new T[width * height]} {};
 
-	float* depthBuffer;
+	virtual T Sample(int x, int y) const = 0;
 
-	DepthBuffer(int width, int height) 
-		: Buffer{width, height}
-	{
-		const int _width = width;
-		depthBuffer = new float[width * height];
-
-		for (int i = 0; i < width * height; i++) {
-			depthBuffer[i] = 1;
-		}
-
-	}
-
-	~DepthBuffer() {
-		delete[] depthBuffer;
-	}
-
-	//深度缓冲采样
-	float Sample(float x, float y) {
+	virtual void UpdateBuffer(int x, int y, T value) {
 
 		if (x >= width || x < 0 || y >= height || y < 0) {
-			return -10;
+			return;
 		}
 
-		//像素中心坐标
-		int _x = Clamp(x, 0, width - 1);
-		int _y = Clamp(y, 0, height - 1);
-
-		return this->depthBuffer[_y * width + _x];
+		this->buffer[y * width + x] = value;
 
 	}
+
+	void ResetBuffer(int width, int height) {
+
+		delete[] buffer;
+
+		this->width = width;
+		this->height = height;
+		buffer = new T[width * height];
+
+	}
+
+	virtual ~Buffer() { delete buffer; }
+};
+
+/// <summary>
+/// 深度值在就是实际情况
+/// </summary>
+struct DepthBuffer : Buffer<float> {
+
+	Camera* aimCamera;
+
+	DepthBuffer(int width = 512, int height = 512, Camera* aimCamera = nullptr);
+
+	~DepthBuffer() {}
+
+
+	/// <summary>
+	/// 超出Buffer时返回相机远平面大小
+	/// </summary>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <returns></returns>
+	float Sample(int x, int y) const override;
+
+	void UpdateBuffer(int x, int y, float value) override;
+
+	void ResetBuffer(int width, int height);
+};
+
+struct ColorBuffer : Buffer<Color> {
+	
+	Camera* aimCamera;
+
+	ColorBuffer(int width = 512, int height = 512, Camera* aimCamera = nullptr);
+
+	~ColorBuffer() {};
+
+	Color Sample(int x, int y) const override;
+
+	void UpdateBuffer(int x, int y, Color value) override;
+
+	void ResetBuffer(int width, int height);
+
+
 };
