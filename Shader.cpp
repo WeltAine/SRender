@@ -74,8 +74,9 @@ namespace newShader {
 
 			if (!isShadow) {
 
-				Vector3f lightPosition = this->currentCamera->v * lightSrc->transform.position;
-				Vector3f lightDirection = this->currentCamera->v * lightSrc->transform.zAxis;//对于点光源更换一下这个变量的计算方式应该就可以了
+				Vector3f lightPosition = this->currentCamera->v * lightSrc->transform.position;//将光源变换到相机地MV空间中
+				//Vector3f lightDirection = this->currentCamera->v * lightSrc->transform.zAxis;//对于点光源更换一下这个变量的计算方式应该就可以了
+				Vector3f lightDirection = dynamic_cast<DirectionLight*>(lightSrc) ? this->currentCamera->v * lightSrc->transform.zAxis : (aimFrag.fragVertex.position - lightSrc->transform.position).Normalized();//对于点光源更换一下这个变量的计算方式应该就可以了
 
 				//漫反射
 				diffuse = max(0, Vector3f::Dot(lightDirection * -1, aimFrag.fragVertex.normal)) * lightSrc->intensity + diffuse;

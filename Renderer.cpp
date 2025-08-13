@@ -270,23 +270,23 @@ namespace newRender {
 
 			//光源深度纹理图像
 			
-			//{
-			//	BmpImg img(512, 512);
-			//
-			//	for (int y = 0, x; y < 512; y++)
-			//	{
-			//		for (x = 0; x < 512; x++)
-			//		{
-			//			Color _color = this->currentCamera->cBuffer->Sample(x, 511- y);
-			//
-			//			img.set_pixel(x, y, _color.r, _color.g, _color.b);
-			//		}
-			//	}
-			//
-			//	std::string name = std::string("shadow_") + std::to_string(lightIndex) + std::string(".bmp");
-			//
-			//	img.write(name);
-			//}
+			{
+				BmpImg img(512, 512);
+			
+				for (int y = 0, x; y < 512; y++)
+				{
+					for (x = 0; x < 512; x++)
+					{
+						Color _color = this->currentCamera->cBuffer->Sample(x, 511- y);
+			
+						img.set_pixel(x, y, _color.r, _color.g, _color.b);
+					}
+				}
+			
+				std::string name = std::string("shadow_") + std::to_string(lightIndex) + std::string(".bmp");
+			
+				img.write(name);
+			}
 
 			lightIndex++;
 		}
@@ -329,22 +329,22 @@ namespace newRender {
 
 		//主相机深度纹理
 
-		//{
-		//	BmpImg img(512, 512);
-		//
-		//	for (int y = 0, x; y < 512; y++)
-		//	{
-		//		for (x = 0; x < 512; x++)
-		//		{
-		//			float z = this->currentCamera->zBuffer->Sample(x, 511 - y);
-		//
-		//			Color temColor = Color::white * ((this->currentCamera->farPlane - (z - 0.1)) / (this->currentCamera->farPlane - this->currentCamera->nearPlane));
-		//			img.set_pixel(x, y, temColor.r, temColor.g, temColor.b);
-		//		}
-		//	}
-		//
-		//	img.write("z.bmp");
-		//}
+		{
+			BmpImg img(512, 512);
+		
+			for (int y = 0, x; y < 512; y++)
+			{
+				for (x = 0; x < 512; x++)
+				{
+					float z = this->currentCamera->zBuffer->Sample(x, 511 - y);
+		
+					Color temColor = Color::white * ((this->currentCamera->farPlane - (z - 0.1)) / (this->currentCamera->farPlane - this->currentCamera->nearPlane));
+					img.set_pixel(x, y, temColor.r, temColor.g, temColor.b);
+				}
+			}
+		
+			img.write("z.bmp");
+		}
 
 		//最终图像
 		
