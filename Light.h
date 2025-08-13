@@ -9,10 +9,7 @@ class Light : public Camera {
 public:
 	float intensity;
 
-	Light(const Camera& lightCamera, float intensity = 1)
-		: Camera{ lightCamera }, intensity{ intensity }
-	{
-	}
+	Light(const Camera& lightCamera, float intensity = 1);
 
 
 	virtual void UpdateLight(const Transform& t, float aspect, float nearPlane, float farPlane, float fov, float intensity, bool isPerspective) = 0;
@@ -24,8 +21,6 @@ class DirectionLight : public Light{
 
 public:
 
-	//bool forVertex;//?是逐顶点还是逐像素，暂时还不知道怎么用
-
 	DirectionLight(const Camera& lightCamera = { {}, false, 1, 1, 50, 168.6 }, float intensity = 1)
 		: Light{ lightCamera, intensity }
 	{};
@@ -34,7 +29,6 @@ public:
 	~DirectionLight();
 
 	Vector3f GetDirection(Vector3f aimPos = Vector3f(0, 0, 0)) const;
-	//Matrix LookAt(const Vector3f& upAxis) const;//将光源转换到世界原点的V矩阵，应该是用于阴影的
 
 	void UpdateLight(const Transform& t, float aspect, float nearPlane, float farPlane, float fov, float intensity, bool isPerspective) override;
 
@@ -46,16 +40,14 @@ class PointLight : public Light{
 
 public :
 
-	//bool forVertex;//原项目没有给这个类配置，感觉一些原本该配置的都没配置，是不是这个类只是写着，就没用过
-
-
-	PointLight(const Camera& lightCamera, float intensity)
+	PointLight(const Camera& lightCamera = { {}, false, 1, 1, 50, 168.6 }, float intensity = 1)
 		: Light{ lightCamera, intensity } {};
-	//PointLight(const Vector3f& pos, float i)
-	//	:position{ pos }, intensity{i} {};
+
 	~PointLight() {};
 
 	Vector3f GetDirection(const Vector3f& aimPos) const;
+
+	void UpdateLight(const Transform& t, float aspect, float nearPlane, float farPlane, float fov, float intensity, bool isPerspective) override;
 };
 
 
