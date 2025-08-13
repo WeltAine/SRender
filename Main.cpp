@@ -16,21 +16,25 @@ static const int windowHeight = 512;
 
 Window* w = new Window(windowWidth, windowHeight, "Test");//窗口
 
-
+//创建相机和光源
 Camera mainCamera{ {}, true, 1, 1, 50, 60 };
-Camera dlCamera{ {}, false, 1, 1, 50, 168.6 };
-DirectionLight directLight{ dlCamera, 1 };
-
+DirectionLight directLight{ { {}, false, 1, 1, 50, 168.6 }, 1 };
+PointLight pointLight{ { {}, true, 1, 1, 50, 60 }, 1 };
+//创建模型
 Mesh cube{};
 Mesh plane{};
 
 
-//纹理
+//创建纹理
 Texture* gezi = new Texture(225, 225);
 
-RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };
+//绑定需要渲染地模型，每个模型地纹理，所有光源，主相机。
+//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//直线光
+//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&pointLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//点光源
+RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&directLight, &pointLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//多光源
 newRender::Render render{ w->screenHDC, windowWidth, windowHeight, rDate };
 
+//创建指定shadow并绑定要读取地数据
 newShader::ShadowShader shadowShader{ &rDate };
 newShader::PhongShader phongShader{ &rDate };
 
@@ -48,25 +52,22 @@ int main() {
 	rDate.shadowShader = &shadowShader;
 	rDate.renderShader = &phongShader;
 
-
-	//调整位置
-	//mainCamera.UpdateCamera({ {0, 0, -5}, {}, {1, 1, 1} }, true, 1, 3, 7, 60);
-	mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);//这里在设置时用到的transform地址是DirectLight的aimCurrent地址
-
-	//directLight.UpdateCamera({ {0, 5, -5}, {45, 0, 0}, {1, 1, 1} }, false, 1, 1, 50, 168.6);
-	//directLight.UpdateCamera({ {-3, 3, -3}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
-	//directLight.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
+	//调整相机和光源位置
+	mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);
+	
 	directLight.UpdateCamera({ {2, 2, -2}, {30, -45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
-	//directLight.UpdateCamera({ {-1, 1, -1}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
+	pointLight.UpdateCamera({ {2, 2, -2}, {45, -45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);
 
-
-
+	//Debug
 	//render.RunPipeLine();
+	//std::cin.get();
+	  
+	//Release
 	Update(w);
 	system("pause");
 
 	
-
+	delete w;
 	delete gezi;
 	return 0;
 }
