@@ -15,11 +15,11 @@ namespace newShader {
 
 		for (Vertex aimVertex : this->uDate->aimVertexs) {
 
-			this->currentCamera->v * (this->uDate->aimObjs[meshIndex]->transform.objectToWorld * aimVertex);//MVå˜åŒ–
+			this->currentCamera->v * (this->uDate->aimObjs[meshIndex]->transform.objectToWorld * aimVertex);//MV±ä»¯
 			this->uDate->mvPositions.push_back( aimVertex.position );
 			this->uDate->mvNormals.push_back(aimVertex.normal);
 
-			this->uDate->mvpPositions.push_back(this->currentCamera->p * aimVertex.position);//åæ ‡çš„mvp
+			this->uDate->mvpPositions.push_back(this->currentCamera->p * aimVertex.position);//×ø±êµÄmvp
 
 		}
 	}
@@ -34,7 +34,7 @@ namespace newShader {
 
 			float z = this->currentCamera->zBuffer->Sample(aimFrag.screenPosition.x, aimFrag.screenPosition.y);
 
-			if (z > ((- aimFrag.fragVertex.position.z) + 0.1)) {//å¯¹æ¯”
+			if (z > ((- aimFrag.fragVertex.position.z) + 0.1)) {//¶Ô±È
 
 				if(this->currentCamera->zBuffer)
 					this->currentCamera->zBuffer->UpdateBuffer(aimFrag.screenPosition.x, aimFrag.screenPosition.y, (-aimFrag.fragVertex.position.z) + 0.1);
@@ -53,13 +53,13 @@ namespace newShader {
 
 	void PhongShader::VertShader(int meshIndex) {
 
-		for (Vertex aimVertex : this->uDate->aimVertexs) {//æ­¤å¤„ä¸å¼•ç”¨ï¼Œä¹‹åæˆ‘ä»¬è¿˜éœ€è¦è¿™ä¸ªåŸå§‹æ•°æ®å¹²ç‚¹å…¶ä»–äº‹æƒ…
+		for (Vertex aimVertex : this->uDate->aimVertexs) {//´Ë´¦²»ÒıÓÃ£¬Ö®ºóÎÒÃÇ»¹ĞèÒªÕâ¸öÔ­Ê¼Êı¾İ¸ÉµãÆäËûÊÂÇé
 
-			this->currentCamera->v * (this->uDate->aimObjs[meshIndex]->transform.objectToWorld * aimVertex);//MVå˜åŒ–
+			this->currentCamera->v * (this->uDate->aimObjs[meshIndex]->transform.objectToWorld * aimVertex);//MV±ä»¯
 			this->uDate->mvPositions.push_back(aimVertex.position);
 			this->uDate->mvNormals.push_back(aimVertex.normal);
 
-			this->uDate->mvpPositions.push_back(this->currentCamera->p * aimVertex.position);//åæ ‡çš„mvp
+			this->uDate->mvpPositions.push_back(this->currentCamera->p * aimVertex.position);//×ø±êµÄmvp
 
 		}
 
@@ -71,47 +71,47 @@ namespace newShader {
 
 		PROFILE_FUNCTION(0, 2);
 
-		//è®¡ç®—é¢œè‰²ï¼Œç¯å¢ƒå…‰ï¼Œæ¼«åå°„ï¼Œé«˜å…‰
+		//¼ÆËãÑÕÉ«£¬»·¾³¹â£¬Âş·´Éä£¬¸ß¹â
 		float ambient = 0.1f, diffuse = 0.0f, specular = 0.0f;
 
-		//è®¡ç®—è¯¥ç‰‡å…ƒåœ¨æ¨¡å‹ç©ºé—´ä¸‹çš„ä½ç½®
+		//¼ÆËã¸ÃÆ¬ÔªÔÚÄ£ĞÍ¿Õ¼äÏÂµÄÎ»ÖÃ
 		Vector3f objectPoint = (this->uDate->aimVertexs[0].position * aimFrag.interpolations.x)
 				+ (this->uDate->aimVertexs[1].position * aimFrag.interpolations.y)
 				+ (this->uDate->aimVertexs[2].position * aimFrag.interpolations.z);
 
 
-		//ç›®å‰å°±å¤„ç†å¹³è¡Œå…‰ï¼Œå¤„äºé˜´å½±ä¸­åˆ™ä¸è¿›è¡Œé«˜å…‰ä¸æ¼«åå°„è®¡ç®—
+		//Ä¿Ç°¾Í´¦ÀíÆ½ĞĞ¹â£¬´¦ÓÚÒõÓ°ÖĞÔò²»½øĞĞ¸ß¹âÓëÂş·´Éä¼ÆËã
 		for (Light* lightSrc : this->uDate->lights) {
 
 			std::string profile_name = lightSrc->isPerspective ? "PointLight" : "DirectionLight";
 			PROFILE_SCOPE(profile_name.c_str(), 0, 3);
 
 			{
-				//é˜´å½±å¤„ç†
-				//è®¡ç®—ç‰‡å…ƒåœ¨å…‰æºè§†è§’ä¸‹çš„å¯è§æ€§
+				//ÒõÓ°´¦Àí
+				//¼ÆËãÆ¬ÔªÔÚ¹âÔ´ÊÓ½ÇÏÂµÄ¿É¼ûĞÔ
 				bool isShadow = this->Shadow(meshIndex, lightSrc, objectPoint);
 
 				if (!isShadow) {
 
 					PROFILE_SCOPE("isNotShadow", 0, 4);
 
-					Vector3f lightPosition = this->currentCamera->v * lightSrc->transform.position;//å°†å…‰æºå˜æ¢åˆ°ç›¸æœºçš„MVç©ºé—´ä¸­
+					Vector3f lightPosition = this->currentCamera->v * lightSrc->transform.position;//½«¹âÔ´±ä»»µ½Ïà»úµÄMV¿Õ¼äÖĞ
 					//Vector3f lightDirection = dynamic_cast<DirectionLight*>(lightSrc) ? 
 					//	this->currentCamera->v * lightSrc->transform.zAxis : (aimFrag.fragVertex.position - lightSrc->transform.position).Normalized();
 					Vector3f lightDirection = !lightSrc->isPerspective ?
 						this->currentCamera->v * lightSrc->transform.zAxis : (aimFrag.fragVertex.position - lightSrc->transform.position).Normalized();
 
-					//æ¼«åå°„
+					//Âş·´Éä
 					diffuse = max(0, Vector3f::Dot(lightDirection * -1, aimFrag.fragVertex.normal)) * lightSrc->intensity + diffuse;
 
-					//é«˜å…‰
+					//¸ß¹â
 					Vector3f helfVector = ((Vector3f() - aimFrag.fragVertex.position).Normalized() - lightDirection).Normalized();
 					specular = std::pow(max(0, Vector3f::Dot(helfVector, aimFrag.fragVertex.normal)), 256) * lightSrc->intensity + specular;
 				}
 			}
 		}
 
-		aimFrag.fragVertex.color = this->uDate->aimTextures[meshIndex]->Sample(aimFrag.fragVertex.uv.x, aimFrag.fragVertex.uv.y);//è·å–é¢œè‰²
+		aimFrag.fragVertex.color = this->uDate->aimTextures[meshIndex]->Sample(aimFrag.fragVertex.uv.x, aimFrag.fragVertex.uv.y);//»ñÈ¡ÑÕÉ«
 
 		aimFrag.fragVertex.color = aimFrag.fragVertex.color * min(ambient + diffuse, 1) + Color::white * min(specular, 1);
 
@@ -149,16 +149,16 @@ namespace newShader {
 			PROFILE_SCOPE("OneFrag", 0, 1);
 			float z = this->currentCamera->zBuffer->Sample(aimFrag.screenPosition.x, aimFrag.screenPosition.y);
 
-			if (z > ((-aimFrag.fragVertex.position.z) + 0.1)) {//å¯¹æ¯”ï¼ŒZTest
+			if (z > ((-aimFrag.fragVertex.position.z) + 0.1)) {//¶Ô±È£¬ZTest
 
 				if (this->currentCamera->zBuffer)
 					this->currentCamera->zBuffer->UpdateBuffer(aimFrag.screenPosition.x, aimFrag.screenPosition.y, (-aimFrag.fragVertex.position.z) + 0.1);
 
 
-				this->Shading(meshIndex, aimFrag);//ç€è‰²
+				this->Shading(meshIndex, aimFrag);//×ÅÉ«
 
 				if (this->currentCamera->cBuffer)
-					this->currentCamera->cBuffer->UpdateBuffer(aimFrag.screenPosition.x, aimFrag.screenPosition.y, aimFrag.fragVertex.color);//å¡«è‰²
+					this->currentCamera->cBuffer->UpdateBuffer(aimFrag.screenPosition.x, aimFrag.screenPosition.y, aimFrag.fragVertex.color);//ÌîÉ«
 
 			}
 		}

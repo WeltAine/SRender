@@ -15,27 +15,27 @@
 static const int windowWidth = 512;
 static const int windowHeight = 512;
 
-Window* w = new Window(windowWidth, windowHeight, "Test");//çª—å£
+Window* w = new Window(windowWidth, windowHeight, "Test");//´°¿Ú
 
-//åˆ›å»ºç›¸æœºå’Œå…‰æº
+//´´½¨Ïà»úºÍ¹âÔ´
 Camera mainCamera{ {}, true, 1, 1, 50, 60 };
 DirectionLight directLight{ { {}, false, 1, 1, 50, 168.6 }, 1 };
 PointLight pointLight{ { {}, true, 1, 1, 50, 60 }, 1 };
-//åˆ›å»ºæ¨¡å‹
+//´´½¨Ä£ĞÍ
 Mesh cube{};
 Mesh plane{};
 
 
-//åˆ›å»ºçº¹ç†
+//´´½¨ÎÆÀí
 Texture gezi = Texture(225, 225);
 
-//ç»‘å®šéœ€è¦æ¸²æŸ“åœ°æ¨¡å‹ï¼Œæ¯ä¸ªæ¨¡å‹åœ°çº¹ç†ï¼Œæ‰€æœ‰å…‰æºï¼Œä¸»ç›¸æœºã€‚
-//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//ç›´çº¿å…‰
-//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&pointLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//ç‚¹å…‰æº
-RenderDate rDate{ {&cube, &plane}, {&gezi, &gezi}, {&pointLight, &directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//å¤šå…‰æº
+//°ó¶¨ĞèÒªäÖÈ¾µØÄ£ĞÍ£¬Ã¿¸öÄ£ĞÍµØÎÆÀí£¬ËùÓĞ¹âÔ´£¬Ö÷Ïà»ú¡£
+//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//Ö±Ïß¹â
+//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&pointLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//µã¹âÔ´
+RenderDate rDate{ {&cube, &plane}, {&gezi, &gezi}, {&pointLight, &directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//¶à¹âÔ´
 newRender::Render render{ w->screenHDC, windowWidth, windowHeight, rDate };
 
-//åˆ›å»ºæŒ‡å®šshadowå¹¶ç»‘å®šè¦è¯»å–åœ°æ•°æ®
+//´´½¨Ö¸¶¨shadow²¢°ó¶¨Òª¶ÁÈ¡µØÊı¾İ
 newShader::ShadowShader shadowShader{ &rDate };
 newShader::PhongShader phongShader{ &rDate };
 
@@ -44,18 +44,18 @@ void Update(Window* w);
 
 int main() {
 
-	//åŠ è½½æ•°æ®
+	//¼ÓÔØÊı¾İ
 	ReadObjFile("cube.obj", &cube);
 	ReadObjFile("Plane.obj", &plane);
 	gezi.LoadTexture("gezi.bmp");
 
-	//è°ƒæ•´é…ç½®
+	//µ÷ÕûÅäÖÃ
 	rDate.shadowShader = &shadowShader;
 	rDate.renderShader = &phongShader;
 
-	//è°ƒæ•´ç›¸æœºå’Œå…‰æºä½ç½®
-	mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);//é€è§†
-	//mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);//æ­£äº¤
+	//µ÷ÕûÏà»úºÍ¹âÔ´Î»ÖÃ
+	mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);//Í¸ÊÓ
+	//mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);//Õı½»
 	
 	directLight.UpdateCamera({ {2, 2, -2}, {30, -45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
 	pointLight.UpdateCamera({ {2, 2, -2}, {45, -45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);
@@ -106,15 +106,15 @@ Vector3f deltaCameraRotation{};
 void UpdateInput()
 {
 
-	// æ£€æŸ¥ç©ºæ ¼é”®æ˜¯å¦æŒ‰ä¸‹
+	// ¼ì²é¿Õ¸ñ¼üÊÇ·ñ°´ÏÂ
 	if (IS_KEY_DOWN(VK_SPACE))
 	{
-		PostQuitMessage(0); // å‘é€é€€å‡ºæ¶ˆæ¯
-		return; // ç›´æ¥è¿”å›ï¼Œé¿å…åç»­å¤„ç†
+		PostQuitMessage(0); // ·¢ËÍÍË³öÏûÏ¢
+		return; // Ö±½Ó·µ»Ø£¬±ÜÃâºóĞø´¦Àí
 	}
 
 
-	//ç›¸æœºçš„ä½ç§»
+	//Ïà»úµÄÎ»ÒÆ
 	if (IS_KEY_DOWN('A'))
 	{
 		deltaCameraPosition.x -= 0.05f;
@@ -143,10 +143,10 @@ void UpdateInput()
 	deltaCameraPosition = render.renderDate.mainCamera->transform.xAxis * deltaCameraPosition.x 
 		+ render.renderDate.mainCamera->transform.yAxis * deltaCameraPosition.y
 		+ render.renderDate.mainCamera->transform.zAxis * deltaCameraPosition.z;
-	render.renderDate.mainCamera->transform.Translate(deltaCameraPosition);//ç§»åŠ¨
+	render.renderDate.mainCamera->transform.Translate(deltaCameraPosition);//ÒÆ¶¯
 
 
-	//ç›¸æœºçš„æ—‹è½¬
+	//Ïà»úµÄĞı×ª
 	if (IS_KEY_DOWN('J'))
 	{
 		deltaCameraRotation.y -= 0.5f;
@@ -163,10 +163,10 @@ void UpdateInput()
 	{
 		deltaCameraRotation.x += 0.5f;
 	}
-	render.renderDate.mainCamera->transform.Rotate(deltaCameraRotation);//æ—‹è½¬
+	render.renderDate.mainCamera->transform.Rotate(deltaCameraRotation);//Ğı×ª
 
 
-	//é‡ç½®ç›¸æœºçš„delta
+	//ÖØÖÃÏà»úµÄdelta
 	deltaCameraPosition.x = 0;
 	deltaCameraPosition.y = 0;
 	deltaCameraPosition.z = 0;

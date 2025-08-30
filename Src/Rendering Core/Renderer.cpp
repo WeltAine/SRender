@@ -9,11 +9,11 @@
 namespace newRender {
 
 	/// <summary>
-	/// ndcåˆ°å±å¹•ç©ºé—´ï¼ŒåŸºäºbufferçš„å±å¹•ç©ºé—´
+	/// ndcµ½ÆÁÄ»¿Õ¼ä£¬»ùÓÚbufferµÄÆÁÄ»¿Õ¼ä
 	/// </summary>
 	void Render::ScreenWorld() {
 
-		//è½¬å‘å±å¹•ç©ºé—´[width, height, 2]
+		//×ªÏòÆÁÄ»¿Õ¼ä[width, height, 2]
 		Matrix tem;
 		tem.matrix[0][0] = this->currentCamera->zBuffer->width / 2.0;	tem.matrix[0][3] = 0.5 * this->currentCamera->zBuffer->width;
 		tem.matrix[1][1] = this->currentCamera->zBuffer->height / 2.0;	tem.matrix[1][3] = 0.5 * this->currentCamera->zBuffer->height;
@@ -28,11 +28,11 @@ namespace newRender {
 
 
 	/// <summary>
-	/// ä»ä¸‹åˆ°ä¸Šçš„æ‰«æ
+	/// ´ÓÏÂµ½ÉÏµÄÉ¨Ãè
 	/// </summary>
 	void Render::ScanTriangle() {
 
-		//æ’åº
+		//ÅÅĞò
 		std::vector<Vector3f> trianglePositions;
 		trianglePositions.reserve(3);
 
@@ -40,7 +40,7 @@ namespace newRender {
 			trianglePositions.emplace_back(screenPosition);
 		}
 
-		//å†’æ³¡
+		//Ã°Åİ
 		if (trianglePositions[1].y < trianglePositions[2].y) {
 
 			trianglePositions[2] = this->renderDate.screenPositions[1];
@@ -69,15 +69,15 @@ namespace newRender {
 		AABB_xMax = AABB_xMax > this->renderDate.screenPositions[2].x ? AABB_xMax : this->renderDate.screenPositions[2].x;
 
 
-		int AABB_S = int(trianglePositions[0].y - trianglePositions[2].y) * int(AABB_xMax - AABB_xMin);//åˆ¤æ–­åŒ…å›´ç›’å­å¤§å°
+		int AABB_S = int(trianglePositions[0].y - trianglePositions[2].y) * int(AABB_xMax - AABB_xMin);//ÅĞ¶Ï°üÎ§ºĞ×Ó´óĞ¡
 
-		//å¼€è¾Ÿç©ºé—´
+		//¿ª±Ù¿Õ¼ä
 		this->renderDate.fragMates.clear();
 		this->renderDate.fragMates.reserve(AABB_S);
 
-		//ç¡®å®šåƒç´ 
+		//È·¶¨ÏñËØ
 		int yMax = trianglePositions[0].y, yMin = trianglePositions[2].y;
-		int yBoundary = trianglePositions[1].y + 0.5;//åˆ†ç•Œä¸åˆ†ç•Œä»¥ä¸‹å½’ä¸‹ä¸‰è§’
+		int yBoundary = trianglePositions[1].y + 0.5;//·Ö½çÓë·Ö½çÒÔÏÂ¹éÏÂÈı½Ç
 		
 		
 		for (int y = yMin; y <= yBoundary; y++) {
@@ -110,7 +110,7 @@ namespace newRender {
 			}
 
 			for (int x = left; x <= right; x++)
-				this->renderDate.fragMates.emplace_back(FragDate{ {}, {x, y}, {} });//äº§ç”Ÿç‰‡å…ƒæ•°æ®ï¼ˆè¿™æ—¶åªæœ‰å±å¹•åæ ‡ï¼‰
+				this->renderDate.fragMates.emplace_back(FragDate{ {}, {x, y}, {} });//²úÉúÆ¬ÔªÊı¾İ£¨ÕâÊ±Ö»ÓĞÆÁÄ»×ø±ê£©
 		}
 
 		for (int y = yBoundary + 1; y <= yMax; y++) {
@@ -144,13 +144,13 @@ namespace newRender {
 			}
 
 			for (int x = left; x <= right; x++)
-				this->renderDate.fragMates.emplace_back(FragDate{ {}, {x, y}, {} });//äº§ç”Ÿç‰‡å…ƒæ•°æ®ï¼ˆè¿™æ—¶åªæœ‰å±å¹•åæ ‡ï¼‰
+				this->renderDate.fragMates.emplace_back(FragDate{ {}, {x, y}, {} });//²úÉúÆ¬ÔªÊı¾İ£¨ÕâÊ±Ö»ÓĞÆÁÄ»×ø±ê£©
 
 		}
 
 	}
 
-	//æ’å€¼ä¸çŸ«æ­£
+	//²åÖµÓë½ÃÕı
 	void Render::Interpolation() {
 
 		for (FragDate& aimFrag : this->renderDate.fragMates) {
@@ -176,9 +176,9 @@ namespace newRender {
 
 			aimFrag.interpolations = {alpha, bate, gamma, 0};
 
-			//mvåæ ‡
+			//mv×ø±ê
 			aimFrag.fragVertex.position = this->renderDate.mvPositions[0] * alpha + this->renderDate.mvPositions[1] * bate + this->renderDate.mvPositions[2] * gamma;
-			//mvæ³•çº¿
+			//mv·¨Ïß
 			aimFrag.fragVertex.normal = this->renderDate.mvNormals[0] * alpha + this->renderDate.mvNormals[1] * bate + this->renderDate.mvNormals[2] * gamma;
 			aimFrag.fragVertex.normal.Normalize();
 
@@ -191,30 +191,30 @@ namespace newRender {
 	}
 
 	/// <summary>
-	/// ä¸‰è§’å½¢å…‰æ …åŒ–
+	/// Èı½ÇĞÎ¹âÕ¤»¯
 	/// </summary>
 	void Render::TriangleRasterization() {
 
 		PROFILE_FUNCTION(0, 0);
 
-		this->ScreenWorld();//è½¬æ¢åˆ°å±å¹•ç©ºé—´
+		this->ScreenWorld();//×ª»»µ½ÆÁÄ»¿Õ¼ä
 
-		//å…‰æ …åŒ–ï¼ˆäº§ç”Ÿç‰‡å…ƒåƒç´ ä½ç½®ï¼‰
+		//¹âÕ¤»¯£¨²úÉúÆ¬ÔªÏñËØÎ»ÖÃ£©
 		this->ScanTriangle();
 
-		//æ’å€¼ï¼ˆè¡¥å……å„ä¸ªç‰‡å…ƒå±æ€§ï¼‰
+		//²åÖµ£¨²¹³ä¸÷¸öÆ¬ÔªÊôĞÔ£©
 		this->Interpolation();
 
 	}
 
 	/// <summary>
-	/// ä¸‰è§’å½¢éå†
+	/// Èı½ÇĞÎ±éÀú
 	/// </summary>
 	void Render::TriangleTraversal() {
 
 		for (Vector3f mvpPosition : this->renderDate.mvpPositions) {
 
-			this->renderDate.ndcPositions.push_back(mvpPosition.Standardization());//å¾—åˆ°ä¸€ä¸ª[2*2*2]çš„ç©ºé—´
+			this->renderDate.ndcPositions.push_back(mvpPosition.Standardization());//µÃµ½Ò»¸ö[2*2*2]µÄ¿Õ¼ä
 
 		}
 
@@ -237,19 +237,19 @@ namespace newRender {
 
 		int lightIndex = 0;
 
-		//å¤„ç†å…‰æºï¼Œå¾—åˆ°å…‰æºçš„æ·±åº¦çº¹ç†
+		//´¦Àí¹âÔ´£¬µÃµ½¹âÔ´µÄÉî¶ÈÎÆÀí
 		for (Light* currentLight : this->renderDate.lights) {
 
 			this->SetCurrentCamera(currentLight);
-			//åˆ·æ–°ç¼“å­˜
+			//Ë¢ĞÂ»º´æ
 			this->currentCamera->zBuffer->Buffer::ResetBuffer();
 			this->currentCamera->cBuffer->Buffer::ResetBuffer();
 
 			int meshIndex = 0;
-			//é€æ¨¡å‹
+			//ÖğÄ£ĞÍ
 			for (Mesh* currentMesh : this->renderDate.aimObjs) {
 
-				//é€ä¸‰è§’é¢
+				//ÖğÈı½ÇÃæ
 				for (const Vector3i& trangleIndex : currentMesh->trangleIndexBuffer) {
 
 					this->renderDate.aimVertexs.clear();
@@ -277,7 +277,7 @@ namespace newRender {
 			}
 
 
-			//å…‰æºæ·±åº¦çº¹ç†å›¾åƒ
+			//¹âÔ´Éî¶ÈÎÆÀíÍ¼Ïñ
 			{
 				//BmpImg img(512, 512);
 				//for (int y = 0, x; y < 512; y++)
@@ -298,7 +298,7 @@ namespace newRender {
 
 
 		this->SetCurrentCamera(this->renderDate.mainCamera);
-		//åˆ·æ–°ç¼“å­˜
+		//Ë¢ĞÂ»º´æ
 		this->currentCamera->zBuffer->Buffer::ResetBuffer();
 		this->currentCamera->cBuffer->Buffer::ResetBuffer();
 
@@ -332,7 +332,7 @@ namespace newRender {
 
 		}
 
-		//ä¸»ç›¸æœºæ·±åº¦çº¹ç†
+		//Ö÷Ïà»úÉî¶ÈÎÆÀí
 		{
 			//BmpImg img(512, 512);
 			//for (int y = 0, x; y < 512; y++)
@@ -347,7 +347,7 @@ namespace newRender {
 			//img.write("z.bmp");
 		}
 
-		//æœ€ç»ˆå›¾åƒ
+		//×îÖÕÍ¼Ïñ
 		{
 			//BmpImg img(512, 512);
 			//for (int y = 0, x; y < 512; y++)

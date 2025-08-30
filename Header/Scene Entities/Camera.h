@@ -12,9 +12,9 @@ struct ColorBuffer;
 class Camera {
 
 public:
-	Transform transform;//ä»¥å…¶Zä½œä¸ºå‘å‰æ–¹å‘
+	Transform transform;//ÒÔÆäZ×÷ÎªÏòÇ°·½Ïò
 	float aspect, nearPlane, farPlane, fov;
-	Matrix v, p;//å¾—åˆ°ä¸€ä¸ª[-1. 1]çš„ä¸‰æ¬¡æ–¹çš„ç«‹æ–¹ä½“
+	Matrix v, p;//µÃµ½Ò»¸ö[-1. 1]µÄÈı´Î·½µÄÁ¢·½Ìå
 	bool isPerspective = true;
 
 	std::shared_ptr<DepthBuffer> zBuffer;
@@ -22,14 +22,14 @@ public:
 
 
 	/// <summary>
-	/// æ„é€ ç›¸æœº
+	/// ¹¹ÔìÏà»ú
 	/// </summary>
 	/// <param name="t">transform</param>
 	/// <param name="isPerspective">mode</param>
-	/// <param name="aspect">æ¯”ä¾‹</param>
-	/// <param name="nearPlane">è¿‘å¹³é¢</param>
-	/// <param name="farPlane">è¿œå¹³é¢</param>
-	/// <param name="fov">è§†é”¥å‚ç›´å¤¹è§’</param>
+	/// <param name="aspect">±ÈÀı</param>
+	/// <param name="nearPlane">½üÆ½Ãæ</param>
+	/// <param name="farPlane">Ô¶Æ½Ãæ</param>
+	/// <param name="fov">ÊÓ×¶´¹Ö±¼Ğ½Ç</param>
 	Camera(const Transform& t, bool isPerspective, float aspect, float nearPlane, float farPlane, float fov);
 
 
@@ -38,11 +38,11 @@ public:
 
 	void UpdateCamera(const Transform& t, bool isPerspective, float aspect, float nearPlane, float farPlane, float fov);
 
-	//ViewçŸ©é˜µè®¡ç®—
+	//View¾ØÕó¼ÆËã
 	Matrix LookAt(const Vector3f& eyePos, const Vector3f& lookDir, const Vector3f& upAxis);
 
-	//PerspectiveçŸ©é˜µè®¡ç®—
-	Matrix Perspective(float fov, float aspect, float nearPlane, float farPlane);//å‚æ•°ä¸ºè§†é”¥å‚ç›´å¤¹è§’(è§’åº¦è´¨)ï¼Œè§†å£æ¯”ä¾‹ï¼ˆå®½/é«˜ï¼‰ï¼Œ è¿‘å¹³é¢è·ç¦»ï¼Œè¿œå¹³é¢è·ç¦»
+	//Perspective¾ØÕó¼ÆËã
+	Matrix Perspective(float fov, float aspect, float nearPlane, float farPlane);//²ÎÊıÎªÊÓ×¶´¹Ö±¼Ğ½Ç(½Ç¶ÈÖÊ)£¬ÊÓ¿Ú±ÈÀı£¨¿í/¸ß£©£¬ ½üÆ½Ãæ¾àÀë£¬Ô¶Æ½Ãæ¾àÀë
 	Matrix Perspective(float l, float r, float t, float b, float n, float f);
 	Matrix Orthographic(float l, float r, float t, float b, float n, float f);
 	Matrix Orthographic(float fov, float aspect, float nearPlane, float farPlane);

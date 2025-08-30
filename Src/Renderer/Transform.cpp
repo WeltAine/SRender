@@ -5,7 +5,7 @@ Transform::Transform()
 	:position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1), objectToWorld(){}
 
 /// <summary>
-/// å…ˆæ¯”ä¾‹åæ—‹è½¬ï¼Œæœ€åå¹³ç§»
+/// ÏÈ±ÈÀıºóĞı×ª£¬×îºóÆ½ÒÆ
 /// </summary>
 /// <param name="pos"></param>
 /// <param name="rot"></param>
@@ -23,7 +23,7 @@ Transform::Transform(const Vector3f& pos, const Vector3f& rot, const Vector3f& s
 Transform::~Transform() {};
 
 /// <summary>
-/// å¯¹thisè¿›è¡Œå¹³ç§»
+/// ¶Ôthis½øĞĞÆ½ÒÆ
 /// </summary>
 /// <param name="translate"></param>
 /// <returns></returns>
@@ -35,7 +35,7 @@ Matrix Transform::Translate(const Vector3f& translate) {
 	tem.matrix[2][3] = translate.z;
 
 	this->objectToWorld = tem * this->objectToWorld;
-	//å¹³ç§»æ— éœ€æ›´æ–°
+	//Æ½ÒÆÎŞĞè¸üĞÂ
 	//this->GetXAxis();
 	//this->GetYAxis();
 	//this->GetZAxis();
@@ -47,7 +47,7 @@ Matrix Transform::Translate(const Vector3f& translate) {
 
 
 /// <summary>
-/// å¯¹thisè¿›è¡ŒåŸºäºä¸–ç•Œåæ ‡ç³»çš„æ—‹è½¬ï¼Œæ—‹è½¬é¡ºåºä¸ºXYZï¼ˆè½´ä¸ºæœ¬æ¬¡æ—‹è½¬è¿‡ç¨‹ä¸­äº§ç”Ÿçš„è½´ï¼‰ï¼Œå‚æ•°ä¸ºè§’åº¦åˆ¶
+/// ¶Ôthis½øĞĞ»ùÓÚÊÀ½ç×ø±êÏµµÄĞı×ª£¬Ğı×ªË³ĞòÎªXYZ£¨ÖáÎª±¾´ÎĞı×ª¹ı³ÌÖĞ²úÉúµÄÖá£©£¬²ÎÊıÎª½Ç¶ÈÖÆ
 /// </summary>
 /// <param name="rotate"></param>
 /// <returns></returns>
@@ -55,18 +55,18 @@ Matrix Transform::Rotate(const Vector3f& rotate) {
 
 	Matrix tem = RotateX(rotate.x) * RotateY(rotate.y) * RotateZ(rotate.z) ;
 
-	//this->objectToWorld = tem * this->objectToWorld;//ä¸éœ€è¦å†æ›´æ–°äº†ï¼Œä¸Šä¸€æ­¥ä¸­å·²ç»å‘ç”Ÿæ›´æ–°äº†
+	//this->objectToWorld = tem * this->objectToWorld;//²»ĞèÒªÔÙ¸üĞÂÁË£¬ÉÏÒ»²½ÖĞÒÑ¾­·¢Éú¸üĞÂÁË
 	//this->GetXAxis();
 	//this->GetYAxis();
 	//this->GetZAxis();
-	//this->rotation = rotate + this->rotation;//è¿™é‡Œä¹Ÿä¸éœ€è¦äº†
+	//this->rotation = rotate + this->rotation;//ÕâÀïÒ²²»ĞèÒªÁË
 
 	return tem;
 }
 
 
 /// <summary>
-/// å¯¹thisè¿›è¡Œç»•ä¸–ç•ŒXè½´æ—‹è½¬ï¼Œå‚æ•°ä¸ºè§’åº¦åˆ¶
+/// ¶Ôthis½øĞĞÈÆÊÀ½çXÖáĞı×ª£¬²ÎÊıÎª½Ç¶ÈÖÆ
 /// </summary>
 /// <param name="rangle"></param>
 /// <returns></returns>
@@ -87,7 +87,7 @@ Matrix Transform::RotateX(const float& rangle){
 
 
 /// <summary>
-/// å¯¹thisè¿›è¡Œç»•ä¸–ç•ŒYè½´æ—‹è½¬ï¼Œå‚æ•°ä¸ºè§’åº¦åˆ¶
+/// ¶Ôthis½øĞĞÈÆÊÀ½çYÖáĞı×ª£¬²ÎÊıÎª½Ç¶ÈÖÆ
 /// </summary>
 /// <param name="rangle"></param>
 /// <returns></returns>
@@ -107,7 +107,7 @@ Matrix Transform::RotateY(const float& rangle){
 }
 
 /// <summary>
-/// å¯¹thisè¿›è¡Œç»•ä¸–ç•ŒZè½´æ—‹è½¬ï¼Œå‚æ•°ä¸ºè§’åº¦åˆ¶
+/// ¶Ôthis½øĞĞÈÆÊÀ½çZÖáĞı×ª£¬²ÎÊıÎª½Ç¶ÈÖÆ
 /// </summary>
 /// <param name="rangle"></param>
 /// <returns></returns>

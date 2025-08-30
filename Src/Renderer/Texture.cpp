@@ -7,19 +7,19 @@
 void Texture::LoadTexture(const std::string& path)
 {
 	
-	//转换字符（配置中的参数要求宽字符）
+	//ת���ַ��������еĲ���Ҫ����ַ���
 	std::wstring wstrPath = StringToWideString(path);
 
-	//配置位图
-	HBITMAP bitmap = (HBITMAP)LoadImage(NULL, wstrPath.c_str(), IMAGE_BITMAP, width, height, LR_LOADFROMFILE);//原项目在项目属性中将字符集更改为宽字符类型，我们还是使用Union，但这个参数要求是一个宽字符类型，我们需要一些更改
+	//����λͼ
+	HBITMAP bitmap = (HBITMAP)LoadImage(NULL, wstrPath.c_str(), IMAGE_BITMAP, width, height, LR_LOADFROMFILE);//ԭ��Ŀ����Ŀ�����н��ַ�������Ϊ���ַ����ͣ����ǻ���ʹ��Union�����������Ҫ����һ�����ַ����ͣ�������ҪһЩ����
 
-	//配置设备上下文（这里使用内存设备
+	//�����豸�����ģ�����ʹ���ڴ��豸
 	HDC hdc = CreateCompatibleDC(NULL);
 
 	SelectObject(hdc, bitmap);
 
-	//不应该先遍历height 然后遍历width么
-	//这里似乎有办法提高读取效率
+	//��Ӧ���ȱ���height Ȼ�����widthô
+	//�����ƺ��а취��߶�ȡЧ��
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)

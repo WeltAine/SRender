@@ -1,7 +1,7 @@
 #include "../../Header/Resources/Mesh.h"
 
 /// <summary>
-/// é¢„å¼€è¾Ÿ240ä¸ªé¡¶ç‚¹ï¼Œ80å¯¹ç´¢å¼•
+/// Ô¤¿ª±Ù240¸ö¶¥µã£¬80¶ÔË÷Òý
 /// </summary>
 Mesh::Mesh() : transform{}
 {

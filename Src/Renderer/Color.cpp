@@ -1,13 +1,13 @@
 #include "../../Header/Resources/Color.h"
 #include "../../Header/Math/MyMath.h"
 
-///å€¼åŸŸåœ¨[0, 255]ä¹‹é—´ï¼Œé»˜è®¤çº¯ç™½
+///ÖµÓòÔÚ[0, 255]Ö®¼ä£¬Ä¬ÈÏ´¿°×
 Color::Color()
 	:r(255), g(255), b(255), a(255)
 {
 }
 
-///å€¼åŸŸåœ¨[0, 1]ä¹‹é—´ï¼Œä½¿ç”¨å‰éœ€è¦è‡ªå·±æ‰‹åŠ¨æ˜ å°„åˆ°è¯¥èŒƒå›´
+///ÖµÓòÔÚ[0, 1]Ö®¼ä£¬Ê¹ÓÃÇ°ĞèÒª×Ô¼ºÊÖ¶¯Ó³Éäµ½¸Ã·¶Î§
 Color::Color(const int& r, const int& g, const int& b, const int& a = 255)
 	:r(Clamp(r, 0, 255)), g(Clamp(g, 0, 255)), b(Clamp(b, 0, 255)), a(Clamp(a, 0, 255))
 {
@@ -71,7 +71,7 @@ Color Color::operator/(const float& value) const
 
 
 /// <summary>
-/// åœ¨c1ä¸c2ä¹‹é—´t%ä½ç½®çš„å€¼
+/// ÔÚc1Óëc2Ö®¼ät%Î»ÖÃµÄÖµ
 /// </summary>
 /// <param name="c1"></param>
 /// <param name="c2"></param>

@@ -7,37 +7,37 @@
 template <typename T>
 class Vector3 {
 public:
-	//å±æ€§
-	T x, y, z, w;//ä¸ºäº†å®ç°å®Œå…¨çš„çº¿æ€§å˜æ¢ï¼Œæ‰€ä»¥å®é™…ä¸Šå››ä¸ªç»´åº¦
+	//ÊôĞÔ
+	T x, y, z, w;//ÎªÁËÊµÏÖÍêÈ«µÄÏßĞÔ±ä»»£¬ËùÒÔÊµ¼ÊÉÏËÄ¸öÎ¬¶È
 	float magnitude;
 
-	//åˆå§‹åŒ–
+	//³õÊ¼»¯
 	Vector3(T x, T y, T z, T w);
 	Vector3(T x, T y, T z);
 	Vector3();
 
-	//è¿ç®—
+	//ÔËËã
 	Vector3<T> operator + (const Vector3<T>& otherVector3) const;
 	Vector3<T> operator - (const Vector3<T>& otherVector3) const;
 	Vector3<T> operator * (float value) const;
 	Vector3<T> operator / (float value) const;
 	static Vector3<T> LerpVector3(const Vector3<T>& p1, const Vector3<T>& p2, float t);
 
-	//ç‚¹ç§¯
+	//µã»ı
 	float Dot(const Vector3<T>& rightVector3) const;
 	static float Dot(const Vector3<T>& leftVector3, const Vector3<T>& rightVebtor3);
 
-	//å‰ç§¯
+	//²æ»ı
 	Vector3<T> Cross(const Vector3<T>& rightVector3) const;
 	static Vector3<T> Cross(const Vector3<T>& leftVector3, const Vector3<T>& rightVector3);
 
-	//å±æ€§å‡½æ•°
+	//ÊôĞÔº¯Êı
 	float Magnitude();
-	float SquareMagnitude();//æ¨¡çš„å¹³æ–¹
+	float SquareMagnitude();//Ä£µÄÆ½·½
 	Vector3<T>& Normalize();
 	Vector3<T> Normalized() const;
 
-	//è¿™æ˜¯Vectorä¸­å”¯ä¸€ä¸€ä¸ªæ”¹å˜wçš„æ–¹æ³•
+	//ÕâÊÇVectorÖĞÎ¨Ò»Ò»¸ö¸Ä±äwµÄ·½·¨
 	Vector3& Standardization() {
 		if (w != 0) {
 
@@ -54,16 +54,16 @@ public:
 	bool operator == (const Vector3<U>& aim) const;
 };
 
-//inline çš„æ ¸å¿ƒä½œç”¨
-//æ¶ˆé™¤å‡½æ•°è°ƒç”¨å¼€é”€ï¼šå»ºè®®ç¼–è¯‘å™¨å°†å‡½æ•°ä½“ç›´æ¥åµŒå…¥è°ƒç”¨å¤„ï¼ˆåƒå®ä¸€æ ·å±•å¼€ï¼‰ï¼Œé¿å…è·³è½¬å’Œæ ˆæ“ä½œã€‚æ˜¯å¦çœŸæ­£å†…è”ç”±ç¼–è¯‘å™¨å†³å®šï¼ˆå–å†³äºä¼˜åŒ–çº§åˆ«ã€å‡½æ•°å¤æ‚åº¦ç­‰ï¼‰ã€‚
-//å…è®¸å¤´æ–‡ä»¶ä¸­å®šä¹‰å‡½æ•°ï¼šæ ‡è®°ä¸º inline çš„å‡½æ•°å¯ä»¥åœ¨å¤šä¸ªç¼–è¯‘å•å…ƒï¼ˆ.cpp æ–‡ä»¶ï¼‰ä¸­é‡å¤å®šä¹‰(éƒ½å¼•å…¥åŒä¸€ä¸ªå¤´æ–‡ä»¶)ï¼Œé“¾æ¥å™¨ä¼šè‡ªåŠ¨é€‰æ‹©ä¸€ä»½å®ç°ã€‚è‹¥å‡½æ•°è¢«æ ‡è®°ä¸º inlineï¼Œé“¾æ¥å™¨ä¼šå¿½ç•¥å¤šä¸ªç¼–è¯‘å•å…ƒä¸­çš„é‡å¤å®šä¹‰ï¼Œä»…ä¿ç•™ä¸€ä»½ï¼ˆä½†chernoè¯´è¿‡ï¼Œå¤´æ–‡ä»¶é‡Œä¸ºå®šä¹‰è®¾ç½®inlineï¼Œ ä¹Ÿæ˜¯åœ¨ç¼–è¯‘æœŸç›´æ¥å¤åˆ¶ä»£ç ï¼Œè¿™æ ·ä¹Ÿèƒ½è§„é¿é‡å®šä¹‰é—®é¢˜ï¼‰ã€‚
-//æœªåŠ  inline çš„æ™®é€šå‡½æ•°åœ¨å¤´æ–‡ä»¶ä¸­å®šä¹‰ä¼šå¯¼è‡´é“¾æ¥é”™è¯¯ï¼ˆé‡å¤å®šä¹‰ï¼‰ã€‚
+//inline µÄºËĞÄ×÷ÓÃ
+//Ïû³ıº¯Êıµ÷ÓÃ¿ªÏú£º½¨Òé±àÒëÆ÷½«º¯ÊıÌåÖ±½ÓÇ¶Èëµ÷ÓÃ´¦£¨ÏñºêÒ»ÑùÕ¹¿ª£©£¬±ÜÃâÌø×ªºÍÕ»²Ù×÷¡£ÊÇ·ñÕæÕıÄÚÁªÓÉ±àÒëÆ÷¾ö¶¨£¨È¡¾öÓÚÓÅ»¯¼¶±ğ¡¢º¯Êı¸´ÔÓ¶ÈµÈ£©¡£
+//ÔÊĞíÍ·ÎÄ¼şÖĞ¶¨Òåº¯Êı£º±ê¼ÇÎª inline µÄº¯Êı¿ÉÒÔÔÚ¶à¸ö±àÒëµ¥Ôª£¨.cpp ÎÄ¼ş£©ÖĞÖØ¸´¶¨Òå(¶¼ÒıÈëÍ¬Ò»¸öÍ·ÎÄ¼ş)£¬Á´½ÓÆ÷»á×Ô¶¯Ñ¡ÔñÒ»·İÊµÏÖ¡£Èôº¯Êı±»±ê¼ÇÎª inline£¬Á´½ÓÆ÷»áºöÂÔ¶à¸ö±àÒëµ¥ÔªÖĞµÄÖØ¸´¶¨Òå£¬½ö±£ÁôÒ»·İ£¨µ«chernoËµ¹ı£¬Í·ÎÄ¼şÀïÎª¶¨ÒåÉèÖÃinline£¬ Ò²ÊÇÔÚ±àÒëÆÚÖ±½Ó¸´ÖÆ´úÂë£¬ÕâÑùÒ²ÄÜ¹æ±ÜÖØ¶¨ÒåÎÊÌâ£©¡£
+//Î´¼Ó inline µÄÆÕÍ¨º¯ÊıÔÚÍ·ÎÄ¼şÖĞ¶¨Òå»áµ¼ÖÂÁ´½Ó´íÎó£¨ÖØ¸´¶¨Òå£©¡£
 
 
-//ä½†æ¨¡æ¿æœ¬èº«æ¯ç§å®ä¾‹åœ¨é“¾æ¥æ—¶ä¹Ÿåªä¼šç•™ä¸‹ä¸€ä¸ªï¼Œinlineä¼¼ä¹ä¸å†é‡è¦
+//µ«Ä£°å±¾ÉíÃ¿ÖÖÊµÀıÔÚÁ´½ÓÊ±Ò²Ö»»áÁôÏÂÒ»¸ö£¬inlineËÆºõ²»ÔÙÖØÒª
 template<typename T>
 Vector3<T>::Vector3(T x, T y, T z, T w)
-	:x{ x }, y{ y }, z{ z }, w{ w }, magnitude{ this->Magnitude() }//ä¸ç¡®å®šè¿™ä¸ªæ—¶æœºæ˜¯å¦å¯è¡Œï¼Œå¯è¡Œ
+	:x{ x }, y{ y }, z{ z }, w{ w }, magnitude{ this->Magnitude() }//²»È·¶¨Õâ¸öÊ±»úÊÇ·ñ¿ÉĞĞ£¬¿ÉĞĞ
 {
 }
 
@@ -165,7 +165,7 @@ float Vector3<T>::SquareMagnitude()
 template<typename T>
 Vector3<T>& Vector3<T>::Normalize()
 {
-	*this = *this / this->magnitude;//åº”è¯¥ä¸ä¼šå¼•å‘å†…å­˜é—®é¢˜ï¼Œ/è¿ç®—çš„ç»“æœæ˜¯åœ¨æ ˆä¸Šçš„ï¼Œå“ªæ€•thisæŒ‡å‘äº†å †ï¼Œé‚£ä¸ªå †ç©ºé—´å¹¶ä¸ä¼šè¢«é‡Šæ”¾
+	*this = *this / this->magnitude;//Ó¦¸Ã²»»áÒı·¢ÄÚ´æÎÊÌâ£¬/ÔËËãµÄ½á¹ûÊÇÔÚÕ»ÉÏµÄ£¬ÄÄÅÂthisÖ¸ÏòÁË¶Ñ£¬ÄÇ¸ö¶Ñ¿Õ¼ä²¢²»»á±»ÊÍ·Å
 	this->magnitude = 1;
 	return *this;
 }
@@ -180,11 +180,11 @@ template<typename T>
 template<typename U>
 inline bool Vector3<T>::operator==(const Vector3<U>& aim) const
 {
-	//å¤åˆ¶
+	//¸´ÖÆ
 	Vector3<T> tem_1 = *this;
 	Vector3<U> tem_2 = aim;
 
-	//é½æ¬¡åŒ–
+	//Æë´Î»¯
 	tem_1.Standardization();
 	tem_2.Standardization();
 

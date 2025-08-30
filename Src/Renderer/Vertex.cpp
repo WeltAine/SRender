@@ -7,7 +7,7 @@ Vertex::Vertex()
 
 
 /// <summary>
-/// inPosåŸæ ·è®°å½•ï¼ŒinNorä¼šè‡ªå·±åšå½’ä¸€åŒ–å¤„ç†ï¼Œå¹¶ä¿è¯w = 0
+/// inPosÔ­Ñù¼ÇÂ¼£¬inNor»á×Ô¼º×ö¹éÒ»»¯´¦Àí£¬²¢±£Ö¤w = 0
 /// </summary>
 /// <param name="inPos"></param>
 /// <param name="inNor"></param>
@@ -21,7 +21,7 @@ Vertex::Vertex(const Vector3f& inPos, const Vector3f& inNor, const Color& inColo
 }
 
 /// <summary>
-/// inPosåŸæ ·è®°å½•ï¼Œ0å‘é‡æ³•çº¿
+/// inPosÔ­Ñù¼ÇÂ¼£¬0ÏòÁ¿·¨Ïß
 /// </summary>
 /// <param name="inPos"></param>
 /// <param name="inColor"></param>
@@ -37,7 +37,7 @@ Vertex::~Vertex()
 
 
 /// <summary>
-/// åœ¨v1ä¸v2ä¹‹é—´ï¼Œå¯¹å„ä¸ªå±æ€§å¯¹ä¹‹é—´t%ä½ç½®ä¸Šçš„å€¼
+/// ÔÚv1Óëv2Ö®¼ä£¬¶Ô¸÷¸öÊôĞÔ¶ÔÖ®¼ät%Î»ÖÃÉÏµÄÖµ
 /// </summary>
 /// <param name="v1"></param>
 /// <param name="v2"></param>
@@ -56,15 +56,15 @@ Vertex Vertex::LerpVertex(const Vertex& v1, const Vertex& v2, float t)
 
 
 /// <summary>
-/// ç»“æœä¼šç›´æ¥å†™å…¥thisï¼Œæ³¨æ„ä¸è¦ç”¨è¯¥æ–¹æ³•å‘ç”Ÿéå‡åŒ€å˜åŒ–ï¼ˆå¹³ç§»æ˜¯å¯ä»¥çš„ï¼‰
+/// ½á¹û»áÖ±½ÓĞ´Èëthis£¬×¢Òâ²»ÒªÓÃ¸Ã·½·¨·¢Éú·Ç¾ùÔÈ±ä»¯£¨Æ½ÒÆÊÇ¿ÉÒÔµÄ£©
 /// </summary>
 /// <param name="h"></param>
 /// <returns></returns>
-Vertex& Vertex::operator*(const Matrix& h)//ä¸€èˆ¬æ˜¯çŸ©é˜µä¹˜ä»¥å‘é‡ï¼Œä½†è¿™ä¸ªä½¿ç”¨å°±åè¿‡æ¥äº†ï¼Œæœ€ç»ˆæˆ‘é€‰æ‹©ä»¥å‹å…ƒçš„æ–¹å¼åœ¨Vertexä¸­é‡è½½*è¿ç®—æ¥è§£å†³è¿™ä¸ªé—®é¢˜
+Vertex& Vertex::operator*(const Matrix& h)//Ò»°ãÊÇ¾ØÕó³ËÒÔÏòÁ¿£¬µ«Õâ¸öÊ¹ÓÃ¾Í·´¹ıÀ´ÁË£¬×îÖÕÎÒÑ¡ÔñÒÔÓÑÔªµÄ·½Ê½ÔÚVertexÖĞÖØÔØ*ÔËËãÀ´½â¾öÕâ¸öÎÊÌâ
 {
 	this->position = h * this->position;
-	this->normal = (h * this->normal).Normalized();//è¿™é‡Œçš„å¤„ç†æ˜¯ä¸å¤Ÿçš„ï¼Œå› ä¸ºå¯¹äºæ³•å‘é‡çš„å¤„ç†æ˜¯è¦ä¹˜ä»¥hçš„é€†è½¬ç½®çŸ©é˜µçš„//https://zhuanlan.zhihu.com/p/72734738
-	//æ‰€ä»¥è¿™ä¸ªæš‚æ—¶åªèƒ½åº”å¯¹å‡åŒ€ç¼©æ”¾ï¼Œæ—‹è½¬å’Œå¹³ç§»çš„å½¢å˜
+	this->normal = (h * this->normal).Normalized();//ÕâÀïµÄ´¦ÀíÊÇ²»¹»µÄ£¬ÒòÎª¶ÔÓÚ·¨ÏòÁ¿µÄ´¦ÀíÊÇÒª³ËÒÔhµÄÄæ×ªÖÃ¾ØÕóµÄ//https://zhuanlan.zhihu.com/p/72734738
+	//ËùÒÔÕâ¸öÔİÊ±Ö»ÄÜÓ¦¶Ô¾ùÔÈËõ·Å£¬Ğı×ªºÍÆ½ÒÆµÄĞÎ±ä
 
 	return *this;
 }
@@ -80,9 +80,9 @@ bool Vertex::operator==(const Vertex& aim)
 
 bool Vertex::operator<(const Vertex& aim) const
 {
-	//return this->position.magnitude < aim.position.magnitude;//å¦‚æœä»…ä½¿ç”¨è·ç¦»æ¥ä½œä¸ºè±¡å¾ï¼Œé‚£ä¹ˆä¸‰ç»´ä¸­ä¸€å®šå­˜åœ¨ä¸€ä¸ªäºŒç»´æ˜¯å®Œå…¨ç­‰ä»·çš„
+	//return this->position.magnitude < aim.position.magnitude;//Èç¹û½öÊ¹ÓÃ¾àÀëÀ´×÷ÎªÏóÕ÷£¬ÄÇÃ´ÈıÎ¬ÖĞÒ»¶¨´æÔÚÒ»¸ö¶şÎ¬ÊÇÍêÈ«µÈ¼ÛµÄ
 
-	//é‡‡å–ç±»ä¼¼äºæ¡¶æ’åºçš„æƒ³æ³•ï¼Œå¯¹è¿™ä¸ª8ç»´ä¿¡æ¯è¿›è¡Œæ¯”è¾ƒ 
+	//²ÉÈ¡ÀàËÆÓÚÍ°ÅÅĞòµÄÏë·¨£¬¶ÔÕâ¸ö8Î¬ĞÅÏ¢½øĞĞ±È½Ï 
 	return (this->position.x != aim.position.x) ? (this->position.x < aim.position.x) :
 		(this->position.y != aim.position.y) ? (this->position.y < aim.position.y) :
 		(this->position.z != aim.position.z) ? (this->position.z < aim.position.z) :
@@ -100,8 +100,8 @@ void Vertex::Print()
 
 }
 
-///ç»“æœä¼šç›´æ¥å†™å…¥this
-//å‹å…ƒå‡½æ•°ï¼Œå®ç°M * Vï¼Œè€Œä¸æ˜¯V * M
+///½á¹û»áÖ±½ÓĞ´Èëthis
+//ÓÑÔªº¯Êı£¬ÊµÏÖM * V£¬¶ø²»ÊÇV * M
 Vertex& operator * (Matrix& leftMatrix, Vertex& rightVertex)
 {
 	return rightVertex * leftMatrix;

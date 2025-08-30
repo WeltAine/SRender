@@ -77,7 +77,7 @@ Matrix Matrix::operator*(const float value) const{
 }
 
 /// <summary>
-/// è½¬ç½®
+/// ×ªÖÃ
 /// </summary>
 /// <returns></returns>
 Matrix Matrix::Transpose() const {

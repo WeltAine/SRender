@@ -3,7 +3,7 @@
 #include "../Math/MyMath.h"
 #include "Color.h"
 //#include "Camera.h"
-//Cameraå’Œbuffeç›¸äº’ç»„åˆï¼Œæ‰€ä»¥.hä¸­åªå†™å£°æ˜Žï¼Œä¸å†™å¤´æ–‡ä»¶ï¼Œæ–¹æ³•å†™åœ¨cppä¸­ï¼ˆå¦‚æžœä½ çš„æ–¹æ³•æ²¡æœ‰ç”¨åˆ°å¯¹æ–¹çš„å…·ä½“æ–¹æ³•æˆ–è€…å­—æ®µé‚£å°±æ— æ‰€è°“ï¼‰æ¥é¿å¤´æ–‡ä»¶å…å¾ªçŽ¯ä¾èµ–
+//CameraºÍbuffeÏà»¥×éºÏ£¬ËùÒÔ.hÖÐÖ»Ð´ÉùÃ÷£¬²»Ð´Í·ÎÄ¼þ£¬·½·¨Ð´ÔÚcppÖÐ£¨Èç¹ûÄãµÄ·½·¨Ã»ÓÐÓÃµ½¶Ô·½µÄ¾ßÌå·½·¨»òÕß×Ö¶ÎÄÇ¾ÍÎÞËùÎ½£©À´±ÜÍ·ÎÄ¼þÃâÑ­»·ÒÀÀµ
 
 class Camera;
 
@@ -43,7 +43,7 @@ struct Buffer {
 
 	void ResetBuffer() {
 
-		this->ResetBuffer(width, height);//ï¿½ï¿½ï¿½ï´¥ï¿½ï¿½ï¿½ï¿½Ì¬ï¿½ï¿½Ì¬
+		this->ResetBuffer(width, height);
 
 	}
 
@@ -51,7 +51,7 @@ struct Buffer {
 };
 
 /// <summary>
-/// æ·±åº¦bufferï¼Œå­˜å‚¨çš„å°±æ˜¯mvç©ºé—´æ—¶çš„æ·±åº¦å€¼
+/// Éî¶Èbuffer£¬´æ´¢µÄ¾ÍÊÇmv¿Õ¼äÊ±µÄÉî¶ÈÖµ
 /// </summary>
 struct DepthBuffer : Buffer<float> {
 
@@ -63,7 +63,7 @@ struct DepthBuffer : Buffer<float> {
 
 
 	/// <summary>
-	/// é‡‡æ ·
+	/// ²ÉÑù
 	/// </summary>
 	/// <param name="x"></param>
 	/// <param name="y"></param>

@@ -23,7 +23,7 @@ Camera::Camera(const Transform& t, bool isPerspective, float aspect, float nearP
 
 
 /// <summary>
-/// è¿”å›V
+/// ·µ»ØV
 /// </summary>
 /// <param name="eyePos"></param>
 /// <param name="lookDir"></param>
@@ -35,12 +35,12 @@ Matrix Camera::LookAt(const Vector3f& eyePos, const Vector3f& lookDir, const Vec
 	Vector3f yAxis = Vector3f::Cross(lookDir, xAxis).Normalized();
 	Vector3f zAxis = lookDir.Normalized();
 
-	Matrix _v_t;//é€†å¹³ç§»
+	Matrix _v_t;//ÄæÆ½ÒÆ
 	_v_t.matrix[0][3] = -eyePos.x;
 	_v_t.matrix[1][3] = -eyePos.y;
 	_v_t.matrix[2][3] = -eyePos.z;
 
-	Matrix _v_r;//é€†æ—‹è½¬
+	Matrix _v_r;//ÄæĞı×ª
 	_v_r.matrix[0][0] = xAxis.x; _v_r.matrix[0][1] = xAxis.y; _v_r.matrix[0][2] = xAxis.z; _v_r.matrix[0][3] = 0;
 	_v_r.matrix[1][0] = yAxis.x; _v_r.matrix[1][1] = yAxis.y; _v_r.matrix[1][2] = yAxis.z; _v_r.matrix[1][3] = 0;
 	_v_r.matrix[2][0] = zAxis.x; _v_r.matrix[2][1] = zAxis.y; _v_r.matrix[2][2] = zAxis.z; _v_r.matrix[2][3] = 0;
@@ -56,7 +56,7 @@ Matrix Camera::LookAt(const Vector3f& eyePos, const Vector3f& lookDir, const Vec
 
 
 /// <summary>
-/// è®¡ç®—PçŸ©é˜µï¼Œfovä¸ºå‚ç›´æ–¹å‘ä¸Šè§’åº¦ï¼Œaspectä¸ºçª—å£å®½é«˜æ¯”ï¼Œå¾—åˆ°2*2*2çš„æœªé½æ¬¡åŒ–åæ ‡ï¼ˆä»æ˜¯æ¢¯å½¢ï¼‰
+/// ¼ÆËãP¾ØÕó£¬fovÎª´¹Ö±·½ÏòÉÏ½Ç¶È£¬aspectÎª´°¿Ú¿í¸ß±È£¬µÃµ½2*2*2µÄÎ´Æë´Î»¯×ø±ê£¨ÈÔÊÇÌİĞÎ£©
 /// </summary>
 /// <param name="fov"></param>
 /// <param name="aspect"></param>
@@ -82,7 +82,7 @@ Matrix Camera::Perspective(float fov, float aspect, float nearPlane, float farPl
 
 
 /// <summary>
-/// è®¡ç®—æŠ•å½±PçŸ©é˜µï¼Œå¾—åˆ°2*2*2çš„æœªé½æ¬¡åŒ–åæ ‡ï¼ˆä»æ˜¯æ¢¯å½¢ï¼‰
+/// ¼ÆËãÍ¶Ó°P¾ØÕó£¬µÃµ½2*2*2µÄÎ´Æë´Î»¯×ø±ê£¨ÈÔÊÇÌİĞÎ£©
 /// </summary>
 /// <param name="l"></param>
 /// <param name="r"></param>
@@ -106,7 +106,7 @@ Matrix Camera::Perspective(float l, float r, float t, float b, float n, float f)
 }
 
 /// <summary>
-/// è®¡ç®—æ­£äº¤PçŸ©é˜µï¼Œå¾—åˆ°2*2*2çš„ç«‹æ–¹ä½“
+/// ¼ÆËãÕı½»P¾ØÕó£¬µÃµ½2*2*2µÄÁ¢·½Ìå
 /// </summary>
 /// <param name="l"></param>
 /// <param name="r"></param>
@@ -154,7 +154,7 @@ Matrix Camera::Orthographic(float fov, float aspect, float nearPlane, float farP
 }
 
 /// <summary>
-/// æ›´æ–°ç›¸æœºçŠ¶æ€ï¼Œæ‰€æœ‰å±æ€§éƒ½ä¼šæ›´æ–°,tong
+/// ¸üĞÂÏà»ú×´Ì¬£¬ËùÓĞÊôĞÔ¶¼»á¸üĞÂ,tong
 /// </summary>
 /// <param name="t"></param>
 /// <param name="isPerspective"></param>

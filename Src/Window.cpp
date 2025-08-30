@@ -23,9 +23,9 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 Window::Window(int w, int h, const char* name) :windowWidth(w), windowHeight(h)
 {
 	WNDCLASS wndClass = { CS_BYTEALIGNCLIENT, (WNDPROC)MsgProc, 0, 0, 0, NULL, NULL, NULL, NULL, TEXT("Test") };
-	wndClass.hInstance = GetModuleHandle(NULL);//Ôºü
+	wndClass.hInstance = GetModuleHandle(NULL);//£ø
 
-	if (!RegisterClass(&wndClass))//Ôºü
+	if (!RegisterClass(&wndClass))//£ø
 		return;
 
 	window = CreateWindow(TEXT("Test"), TEXT("Test"), WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
@@ -39,7 +39,7 @@ Window::Window(int w, int h, const char* name) :windowWidth(w), windowHeight(h)
 
 	BITMAPINFO bitmapInfo = { { sizeof(BITMAPINFOHEADER),windowWidth, windowHeight, 1, 32, BI_RGB, windowWidth * windowHeight * 4, 0, 0, 0, 0 } };
 	LPVOID ptr;
-	//ÂàõÂª∫ËÆæÂ§áÊó†ÂÖ≥ÁöÑ‰ΩçÂõæ
+	//¥¥Ω®…Ë±∏ŒﬁπÿµƒŒªÕº
 	HBITMAP bitmapHandler = CreateDIBSection(screenHDC, &bitmapInfo, DIB_RGB_COLORS, &ptr, 0, 0);
 	if (bitmapHandler == NULL)
 		return;

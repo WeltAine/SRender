@@ -10,13 +10,13 @@ float Clamp(float value, float min, float max)
 
 
 /// <summary>
-/// 该方法可对任意三角面进行重心插值
+/// �÷����ɶ�����������������Ĳ�ֵ
 /// </summary>
 /// <param name="v1"></param>
 /// <param name="v2"></param>
 /// <param name="v3"></param>
-/// <param name="p">基于该参数的x,y进行插值，但是不会去验证该参数是否共面</param>
-/// <returns>返回一个与p同xy且共面的插值系数</returns>
+/// <param name="p">���ڸò�����x,y���в�ֵ�����ǲ���ȥ��֤�ò����Ƿ���</param>
+/// <returns>����һ����pͬxy�ҹ���Ĳ�ֵϵ��</returns>
 Vector3f CenterOfGravityInterpolation(Vector3f v1, Vector3f v2, Vector3f v3, Vector3f p)
 {
     //p = alpha * v1 + beta * v2 + gamma * v3;

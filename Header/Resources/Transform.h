@@ -4,22 +4,22 @@
 #include "../Math/Matrix.h"
 
 
-//è¿™é‡Œé‡‡å–å·¦æ‰‹åæ ‡ç³»
+//ÕâÀï²ÉÈ¡×óÊÖ×ø±êÏµ
 class Transform {
 
 public:
 
-	Vector3f position;//æ¨¡å‹åœ¨ä¸–ç•Œç©ºé—´ä¸‹çš„ä¸­å¿ƒåæ ‡
-	Vector3f rotation;//æ—‹è½¬
-	Vector3f scale;//æ¯”ä¾‹
-	//è¿™ä¸‰è€…ä¸ºæ¨¡å‹çš„åˆæ€è®°å½•
+	Vector3f position;//Ä£ĞÍÔÚÊÀ½ç¿Õ¼äÏÂµÄÖĞĞÄ×ø±ê
+	Vector3f rotation;//Ğı×ª
+	Vector3f scale;//±ÈÀı
+	//ÕâÈıÕßÎªÄ£ĞÍµÄ³õÌ¬¼ÇÂ¼
 
-	//ä¸‰ä¸ªå•ä½è½´å‘
+	//Èı¸öµ¥Î»ÖáÏò
 	Vector3f xAxis = Vector3f(1, 0, 0, 0);
 	Vector3f yAxis = Vector3f(0, 1, 0, 0);
 	Vector3f zAxis = Vector3f(0, 0, 1, 0);
 
-	Matrix objectToWorld;//è®°å½•æ‰€æœ‰çš„å˜æ¢ï¼ŒM
+	Matrix objectToWorld;//¼ÇÂ¼ËùÓĞµÄ±ä»»£¬M
 
 	Transform();
 	Transform(const Vector3f& pos, const Vector3f& rot, const Vector3f& s);
