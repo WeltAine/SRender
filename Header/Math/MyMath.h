@@ -7,13 +7,13 @@ float Clamp(float value, float min, float max);
 
 
 /// <summary>
-/// ¸Ã·½·¨¿É¶ÔÈÎÒâÈı½ÇÃæ½øĞĞÖØĞÄ²åÖµ
+/// è¯¥æ–¹æ³•å¯å¯¹ä»»æ„ä¸‰è§’é¢è¿›è¡Œé‡å¿ƒæ’å€¼
 /// </summary>
 /// <param name="v1"></param>
 /// <param name="v2"></param>
 /// <param name="v3"></param>
-/// <param name="p">»ùÓÚ¸Ã²ÎÊıµÄx,y½øĞĞ²åÖµ£¬µ«ÊÇ²»»áÈ¥ÑéÖ¤¸Ã²ÎÊıÊÇ·ñ¹²Ãæ</param>
-/// <returns>·µ»ØÒ»¸öÓëpÍ¬xyÇÒ¹²ÃæµÄ²åÖµÏµÊı</returns>
+/// <param name="p">åŸºäºè¯¥å‚æ•°çš„x,yè¿›è¡Œæ’å€¼ï¼Œä½†æ˜¯ä¸ä¼šå»éªŒè¯è¯¥å‚æ•°æ˜¯å¦å…±é¢</param>
+/// <returns>è¿”å›ä¸€ä¸ªä¸påŒxyä¸”å…±é¢çš„æ’å€¼ç³»æ•°</returns>
 Vector3f CenterOfGravityInterpolation(Vector3f v1, Vector3f v2, Vector3f v3, Vector3f p);
 
 float LerpFloat(float f1, float f2, float t);

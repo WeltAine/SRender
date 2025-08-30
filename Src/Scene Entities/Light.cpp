@@ -14,7 +14,7 @@ DirectionLight::~DirectionLight()
 }
 
 /// <summary>
-/// 获得世界空间中光源到目标点的距离向量，默认是到原点的距离向量
+/// 鑾峰緱涓栫晫绌洪棿涓厜婧愬埌鐩爣鐐圭殑璺濈鍚戦噺锛岄粯璁ゆ槸鍒板師鐐圭殑璺濈鍚戦噺
 /// </summary>
 /// <param name="aimPos"></param>
 /// <returns></returns>
@@ -28,7 +28,7 @@ Vector3f DirectionLight::GetDirection(Vector3f aimPos) const
 
 
 /// <summary>
-/// 更新光源的相机与强度
+/// 鏇存柊鍏夋簮鐨勭浉鏈轰笌寮哄害
 /// </summary>
 /// <param name="t"></param>
 /// <param name="isPerspective"></param>
@@ -55,7 +55,7 @@ Vector3f PointLight::GetDirection(const Vector3f& aimPos) const
 }
 
 /// <summary>
-/// 更新光源的相机与强度
+/// 鏇存柊鍏夋簮鐨勭浉鏈轰笌寮哄害
 /// </summary>
 /// <param name="t"></param>
 /// <param name="aspect"></param>

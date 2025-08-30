@@ -8,17 +8,17 @@
 #include <thread>
 
 /// <summary>
-/// º¯Êı²âÁ¿½á¹û
+/// å‡½æ•°æµ‹é‡ç»“æœ
 /// </summary>
 struct ProfileResult
 {
     std::string Name;
-    long long Start, End;//¿ªÊ¼Ê±¼ä£¬½áÊøÊ±¼ä
-    uint32_t ThreadID;//Ïß³Ìid
+    long long Start, End;//å¼€å§‹æ—¶é—´ï¼Œç»“æŸæ—¶é—´
+    uint32_t ThreadID;//çº¿ç¨‹id
 };
 
 /// <summary>
-/// ²å×®»á»°
+/// æ’æ¡©ä¼šè¯
 /// </summary>
 struct InstrumentationSession
 {
@@ -27,14 +27,14 @@ struct InstrumentationSession
 
 
 /// <summary>
-/// ²å×®£¨µ¥Àı£©
+/// æ’æ¡©ï¼ˆå•ä¾‹ï¼‰
 /// </summary>
 class Instrumentor
 {
 private:
     InstrumentationSession* m_CurrentSession;
-    std::ofstream m_OutputStream;               //ÎÄ¼şÁ÷
-    int m_ProfileCount;                         //Êä³ö¼ÆÊı
+    std::ofstream m_OutputStream;               //æ–‡ä»¶æµ
+    int m_ProfileCount;                         //è¾“å‡ºè®¡æ•°
 public:
     Instrumentor()
         : m_CurrentSession(nullptr), m_ProfileCount(0)
@@ -63,7 +63,7 @@ public:
             m_OutputStream << ",";
 
         std::string name = result.Name;
-        std::replace(name.begin(), name.end(), '"', '\'');//·¶Î§ÄÚ²éÕÒÓëÌæ»»
+        std::replace(name.begin(), name.end(), '"', '\'');//èŒƒå›´å†…æŸ¥æ‰¾ä¸æ›¿æ¢
 
         m_OutputStream << "{";
         m_OutputStream << "\"cat\":\"function\",\n";
@@ -76,24 +76,24 @@ public:
         m_OutputStream << "}";
         m_OutputStream << "\n";
 
-        m_OutputStream.flush();//Êä³ö»º³å
+        m_OutputStream.flush();//è¾“å‡ºç¼“å†²
     }
 
-    //jsonÎÄ¼şÍ·²¿
+    //jsonæ–‡ä»¶å¤´éƒ¨
     void WriteHeader()
     {
         m_OutputStream << "{\"otherData\": {},\"traceEvents\":[";
-        m_OutputStream.flush();//Êä³ö»º³å
+        m_OutputStream.flush();//è¾“å‡ºç¼“å†²
     }
 
-    //jsonÎÄ¼şÎ²²¿
+    //jsonæ–‡ä»¶å°¾éƒ¨
     void WriteFooter()
     {
         m_OutputStream << "]}";
-        m_OutputStream.flush();//Êä³ö»º³å
+        m_OutputStream.flush();//è¾“å‡ºç¼“å†²
     }
 
-    static Instrumentor& Get()//µ¥Àı
+    static Instrumentor& Get()//å•ä¾‹
     {
         static Instrumentor instance;
         return instance;
@@ -103,10 +103,10 @@ public:
 
 
 
-//¼ÆÊ±Æ÷
+//è®¡æ—¶å™¨
 
 /// <summary>
-/// ²å×®¼ÆÊ±Æ÷
+/// æ’æ¡©è®¡æ—¶å™¨
 /// </summary>
 class InstrumentationTimer
 {
@@ -132,15 +132,15 @@ public:
 
         end = (end - start) < m_minTime ? start + m_minTime : end;
 
-        uint32_t threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());//º¯Êı¶ÔÏó
-        Instrumentor::Get().WriteProfile({ m_Name, start, end, threadID });//Êä³öÎÄ¼ş
+        uint32_t threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());//å‡½æ•°å¯¹è±¡
+        Instrumentor::Get().WriteProfile({ m_Name, start, end, threadID });//è¾“å‡ºæ–‡ä»¶
 
         m_Stopped = true;
     }
 private:
-    const char* m_Name;                                                             //º¯ÊıÃû³Æ
-    std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;   //¿ªÊ¼Ê±¼ä
-    bool m_Stopped;                                                                 //ÊÇ·ñÍ£Ö¹¼ÆÊ±
+    const char* m_Name;                                                             //å‡½æ•°åç§°
+    std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;   //å¼€å§‹æ—¶é—´
+    bool m_Stopped;                                                                 //æ˜¯å¦åœæ­¢è®¡æ—¶
     int m_minTime;
     int m_offsetTime;
 };

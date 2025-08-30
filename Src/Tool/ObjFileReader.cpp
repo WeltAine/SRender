@@ -1,10 +1,10 @@
 #include "../../Header/Tool/ObjFileReader.h"
-#include <sstream>  // Ìá¹© std::istringstream
+#include <sstream>  // æä¾› std::istringstream
 #include <map>
 #include <cstdlib>
 
 /// <summary>
-/// ×Ö·û´®²ğ½â£¬»á×Ô¼ºÇåÀí×Ö·ûÏòÁ¿
+/// å­—ç¬¦ä¸²æ‹†è§£ï¼Œä¼šè‡ªå·±æ¸…ç†å­—ç¬¦å‘é‡
 /// </summary>
 /// <param name="s"></param>
 /// <param name="splitchar"></param>
@@ -40,8 +40,8 @@ void ReadObjFile(std::string path, Mesh* obj)
 {
 
 	std::ifstream in(path);
-	std::string line = "";//ÁÙÊ±´æ´¢×Ö·û´®ÓÃÓÚ
-	std::string prefix = "";//Ç°×º
+	std::string line = "";//ä¸´æ—¶å­˜å‚¨å­—ç¬¦ä¸²ç”¨äº
+	std::string prefix = "";//å‰ç¼€
 
 	std::vector<std::string> group;
 	std::vector<Vector3f> positionBuffer;
@@ -61,11 +61,11 @@ void ReadObjFile(std::string path, Mesh* obj)
 
 			prefix.clear();
 			std::istringstream iss(line);
-			iss >> prefix;  // ×Ô¶¯ÌáÈ¡µÚÒ»¸öµ¥´Ê»ò×Ö·û
+			iss >> prefix;  // è‡ªåŠ¨æå–ç¬¬ä¸€ä¸ªå•è¯æˆ–å­—ç¬¦
 
 			if (prefix == "v") {
 
-				line.erase(0, 2);//É¾³ı´ÓË÷Òı0¿ªÊıµÄÁ½¸ö×Ö·û£¬Ò²¾ÍÊÇ0ºÍ1
+				line.erase(0, 2);//åˆ é™¤ä»ç´¢å¼•0å¼€æ•°çš„ä¸¤ä¸ªå­—ç¬¦ï¼Œä¹Ÿå°±æ˜¯0å’Œ1
 				StringSplit(line, ' ', group);
 
 				Vector3f tem(std::stof(group[0]), std::stof(group[1]), std::stof(group[2]));
@@ -74,7 +74,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 			}
 			else if(prefix == "vt") {
 
-				line.erase(0, 3);//É¾³ı´ÓË÷Òı0¿ªÊıµÄÁ½¸ö×Ö·û£¬Ò²¾ÍÊÇ012
+				line.erase(0, 3);//åˆ é™¤ä»ç´¢å¼•0å¼€æ•°çš„ä¸¤ä¸ªå­—ç¬¦ï¼Œä¹Ÿå°±æ˜¯012
 				StringSplit(line, ' ', group);
 
 				Vector2f tem(std::stof(group[0]), std::stof(group[1]));
@@ -83,7 +83,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 			}
 			else if (prefix == "vn") {
 
-				line.erase(0, 3);//É¾³ı´ÓË÷Òı0¿ªÊıµÄÁ½¸ö×Ö·û£¬Ò²¾ÍÊÇ012
+				line.erase(0, 3);//åˆ é™¤ä»ç´¢å¼•0å¼€æ•°çš„ä¸¤ä¸ªå­—ç¬¦ï¼Œä¹Ÿå°±æ˜¯012
 				StringSplit(line, ' ', group);
 
 				Vector3f tem(std::stof(group[0]), std::stof(group[1]), std::stof(group[2]), 0);
@@ -92,7 +92,7 @@ void ReadObjFile(std::string path, Mesh* obj)
 			}
 			else if (prefix == "f") {
 
-				line.erase(0, 2);//É¾³ı´ÓË÷Òı0¿ªÊıµÄÁ½¸ö×Ö·û£¬Ò²¾ÍÊÇ0ºÍ1
+				line.erase(0, 2);//åˆ é™¤ä»ç´¢å¼•0å¼€æ•°çš„ä¸¤ä¸ªå­—ç¬¦ï¼Œä¹Ÿå°±æ˜¯0å’Œ1
 				StringSplit(line, ' ', group);
 
 				switch (group.size()) {
@@ -149,11 +149,11 @@ void ReadObjFile(std::string path, Mesh* obj)
 						
 						if (vertexBuffer.find(tem) == vertexBuffer.end()) {
 
-							//Èç¹ûÊÇĞÂµÄ¶¥µã
-							trangleIndex[i] = vertexBuffer.size();//Ë³ĞòĞÂÔö±àºÅ
-							vertexBuffer.insert(std::pair<Vertex, int>(tem, trangleIndex[i]));//ÔØÈëmap
+							//å¦‚æœæ˜¯æ–°çš„é¡¶ç‚¹
+							trangleIndex[i] = vertexBuffer.size();//é¡ºåºæ–°å¢ç¼–å·
+							vertexBuffer.insert(std::pair<Vertex, int>(tem, trangleIndex[i]));//è½½å…¥map
 
-							obj->vertexBuffer.push_back(tem);//ÔØÈëmesh
+							obj->vertexBuffer.push_back(tem);//è½½å…¥mesh
 
 						}
 						else {

@@ -10,7 +10,7 @@ class Texture {
 
 public:
 	
-	int width, height;//纹理大小，但是实际访问时使用UV统一规范访问
+	int width, height;//绾圭悊澶у皬锛屼絾鏄疄闄呰闂椂浣跨敤UV缁熶竴瑙勮寖璁块棶
 	ColorBuffer textureData;
 
 

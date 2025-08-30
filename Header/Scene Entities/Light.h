@@ -12,7 +12,7 @@ public:
 
 };
 
-//ֱ�߹�
+//直线光
 class DirectionLight : public Light{
 
 public:
@@ -21,7 +21,7 @@ public:
 		: Light{ lightCamera, intensity }
 	{};
 	//DirectionLight(const Vector3f& pos, const Vector3f& dir, float i, bool forV = true);
-	//��Ϊʲôû���ض������⣬��Ϊ���ڲ��ķ������壬�������ʽinline
+	//？为什么没有重定义问题，因为类内部的方法定义，会带有隐式inline
 	~DirectionLight();
 
 	Vector3f GetDirection(Vector3f aimPos = Vector3f(0, 0, 0)) const;
@@ -31,7 +31,7 @@ public:
 };
 
 
-//���Դ
+//点光源
 class PointLight : public Light{
 
 public :
@@ -47,6 +47,6 @@ public :
 };
 
 
-//��Ϊʲôû�д�������ض��壬���ȶ���ͬһ�����뵥Ԫ�����ǵġ��ඨ�塱д����ͷ�ļ����ͷ�ļ�������ֹ�ظ�չ��
-//��Σ����ඨ�塱���� class Transform { ... };�����������������������߱�������Ľṹ��Ϣ����Ա�����������ȣ������������ͽṹ��������Ŀ���ļ���.o �� .obj�������ɿ����ӵķ��š�
+//？为什么没有触发类的重定义，首先对于同一个编译单元，我们的“类定义”写在了头文件里，有头文件保护防止重复展开
+//其次，“类定义”（如 class Transform { ... };）本质上是类型声明，告诉编译器类的结构信息（成员变量、函数等）。仅声明类型结构，不会在目标文件（.o 或 .obj）中生成可链接的符号。
 

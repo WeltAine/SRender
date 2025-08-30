@@ -2,10 +2,10 @@
 
 std::wstring StringToWideString(const std::string& str, UINT codePage) {
 
-    int wstringLength = MultiByteToWideChar(codePage, 0, str.c_str(), -1, NULL, 0);//È·¶¨´óĞ¡£¿ÕâÊÇ±ØÒªµÄÃ´£¬ÎªÊ²Ã´²»ÄÜÔÚ×ª»»Ê±Ö±½Ó¸³Öµ
+    int wstringLength = MultiByteToWideChar(codePage, 0, str.c_str(), -1, NULL, 0);//ç¡®å®šå¤§å°ï¼Ÿè¿™æ˜¯å¿…è¦çš„ä¹ˆï¼Œä¸ºä»€ä¹ˆä¸èƒ½åœ¨è½¬æ¢æ—¶ç›´æ¥èµ‹å€¼
     
     std::wstring wstr(wstringLength, 0);
-    MultiByteToWideChar(codePage, 0, str.c_str(), -1, &wstr[0], str.size());//×ª»»×Ö·û´®£¬str.size()ÎŞĞè¼ÓÒ»£¬¶ÔÓÚstringÀ´Ëµ£¬ËüÃÇÊÇÃæÏò¶ÔÏóµÄ
+    MultiByteToWideChar(codePage, 0, str.c_str(), -1, &wstr[0], str.size());//è½¬æ¢å­—ç¬¦ä¸²ï¼Œstr.size()æ— éœ€åŠ ä¸€ï¼Œå¯¹äºstringæ¥è¯´ï¼Œå®ƒä»¬æ˜¯é¢å‘å¯¹è±¡çš„
     return wstr;
 
 }

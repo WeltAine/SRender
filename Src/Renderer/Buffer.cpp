@@ -16,7 +16,7 @@ DepthBuffer::DepthBuffer(int width, int height, Camera* aimCamera)
 
 float DepthBuffer::Sample(int x, int y) const {
 
-	////ÏñËØÖĞĞÄ×ø±ê
+	////åƒç´ ä¸­å¿ƒåæ ‡
 	//int _x = Clamp(x, 0, width - 1);
 	//int _y = Clamp(y, 0, height - 1);
 

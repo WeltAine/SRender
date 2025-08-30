@@ -13,37 +13,37 @@ namespace newShader{
 	class IShader;
 }
 
-//ºËĞÄ¹¦ÄÜÊÇ¼ÇÂ¼Á½¸ö×ÅÉ«Æ÷ĞèÒªÓÃµ½ºÍ²úÉúµÄÊı¾İ
+//æ ¸å¿ƒåŠŸèƒ½æ˜¯è®°å½•ä¸¤ä¸ªç€è‰²å™¨éœ€è¦ç”¨åˆ°å’Œäº§ç”Ÿçš„æ•°æ®
 
 
-//Í¸ÊÓ½ÃÕıËùÓÃµÄ¿Õ¼äÊÇÔÚMVÖĞµÄ£¨Ä¿Ç°µÄÍÆÑİÖĞ£¬Ò²±íÃ÷±ØĞëÔÚMVÖĞ£¬ÒòÎªZµÄ±ÈÀıÊÇ½ÃÕı±ÈÀıµÄ¹Ø¼ü£¬P»á²úÉúÆ½ÒÆ£¬ÆÆ»µ±ÈÀı£©£¬´íÎó±ÈÀı¼ÌĞøÊ¹ÓÃndc»òÕßÆÁÄ»¶¼ĞĞ
+//é€è§†çŸ«æ­£æ‰€ç”¨çš„ç©ºé—´æ˜¯åœ¨MVä¸­çš„ï¼ˆç›®å‰çš„æ¨æ¼”ä¸­ï¼Œä¹Ÿè¡¨æ˜å¿…é¡»åœ¨MVä¸­ï¼Œå› ä¸ºZçš„æ¯”ä¾‹æ˜¯çŸ«æ­£æ¯”ä¾‹çš„å…³é”®ï¼ŒPä¼šäº§ç”Ÿå¹³ç§»ï¼Œç ´åæ¯”ä¾‹ï¼‰ï¼Œé”™è¯¯æ¯”ä¾‹ç»§ç»­ä½¿ç”¨ndcæˆ–è€…å±å¹•éƒ½è¡Œ
 
 /// <summary>
-/// Èı½ÇĞÎ±éÀúºó²úÉúµÄÆ¬ÔªÊı¾İ
+/// ä¸‰è§’å½¢éå†åäº§ç”Ÿçš„ç‰‡å…ƒæ•°æ®
 /// </summary>
 struct FragDate {
-	Vertex fragVertex;//°üº¬Ã¿¸öÆ¬ÔªµÄMV¿Õ¼äÏÂµÄposition, normal, uv¡£normal´¦Àí¹âÕÕ£¬uvÃ»Ê²Ã´»á²úÉú±ä»¯µÄÔ­Òò
+	Vertex fragVertex;//åŒ…å«æ¯ä¸ªç‰‡å…ƒçš„MVç©ºé—´ä¸‹çš„position, normal, uvã€‚normalå¤„ç†å…‰ç…§ï¼Œuvæ²¡ä»€ä¹ˆä¼šäº§ç”Ÿå˜åŒ–çš„åŸå› 
 	Vector2i screenPosition;
-	Vector3f interpolations;//²åÖµ±ÈÀı
+	Vector3f interpolations;//æ’å€¼æ¯”ä¾‹
 };
 
 struct RenderDate {
 
-	std::vector<Mesh*> aimObjs{};//ÒªäÖÈ¾µÄÄ£ĞÍ
-	std::vector<Texture*> aimTextures;//Ä£ĞÍËùÊ¹ÓÃµÄÎÆÀí
-	std::vector<Light*> lights{};//¹âÔ´
-	Camera* mainCamera;//ÀïÍ·°üº¬ÑÕÉ«ºÍÉî¶È»º´æ
+	std::vector<Mesh*> aimObjs{};//è¦æ¸²æŸ“çš„æ¨¡å‹
+	std::vector<Texture*> aimTextures;//æ¨¡å‹æ‰€ä½¿ç”¨çš„çº¹ç†
+	std::vector<Light*> lights{};//å…‰æº
+	Camera* mainCamera;//é‡Œå¤´åŒ…å«é¢œè‰²å’Œæ·±åº¦ç¼“å­˜
 
 	newShader::IShader* shadowShader, * renderShader;
 
 
 	std::vector<Vertex> aimVertexs;
-	std::vector<Vector3f> mvpPositions;//Î´Æë´Î»¯
-	std::vector<Vector3f> mvPositions;//ÊÀ½ç¿Õ¼ä¶¥µã£¬¹âÕÕ´¦ÀíÊ±Ê¹ÓÃ
+	std::vector<Vector3f> mvpPositions;//æœªé½æ¬¡åŒ–
+	std::vector<Vector3f> mvPositions;//ä¸–ç•Œç©ºé—´é¡¶ç‚¹ï¼Œå…‰ç…§å¤„ç†æ—¶ä½¿ç”¨
 	std::vector<Vector3f> mvNormals;
 	std::vector<Vector3f> ndcPositions;
 	std::vector<Vector3f> screenPositions;
-	std::vector<FragDate> fragMates;//ËüºÍÉÏÍ·ÄÇ¸ö¶¼ÓĞÆÁÄ»×ø±ê£¬²»¹ıÁ¿¼¶ÍêÈ«²»Í¬
+	std::vector<FragDate> fragMates;//å®ƒå’Œä¸Šå¤´é‚£ä¸ªéƒ½æœ‰å±å¹•åæ ‡ï¼Œä¸è¿‡é‡çº§å®Œå…¨ä¸åŒ
 
 };
 

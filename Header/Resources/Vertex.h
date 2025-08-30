@@ -21,13 +21,13 @@ public:
 	~Vertex();
 
 
-	//void LerpVertex(const Vertex& v1, const Vertex& v2, float t);//ÎªÊ²Ã´ÕâÑùÉè¼Æ£¬¸Ä±ä·¢Æğ¶ÔÏó£¬¶ø²»ÊÇ·µ»ØÒ»¸ö½á¹û
+	//void LerpVertex(const Vertex& v1, const Vertex& v2, float t);//ä¸ºä»€ä¹ˆè¿™æ ·è®¾è®¡ï¼Œæ”¹å˜å‘èµ·å¯¹è±¡ï¼Œè€Œä¸æ˜¯è¿”å›ä¸€ä¸ªç»“æœ
 	static Vertex LerpVertex(const Vertex& v1, const Vertex& v2, float t);
 
-	Vertex& operator * (const Matrix& h);//ÕâÀï¶ÔÊ¹ÓÃÕß¶øÑÔ£¬¿ÉÄÜÊÇM£¬ MV£¬ P
+	Vertex& operator * (const Matrix& h);//è¿™é‡Œå¯¹ä½¿ç”¨è€…è€Œè¨€ï¼Œå¯èƒ½æ˜¯Mï¼Œ MVï¼Œ P
 
 	bool operator == (const Vertex& aim);
-	bool operator < (const Vertex& aim) const;//±ØĞëÉùÃ÷Îªconst
+	bool operator < (const Vertex& aim) const;//å¿…é¡»å£°æ˜ä¸ºconst
 
 	void Print();
 

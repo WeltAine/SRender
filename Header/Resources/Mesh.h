@@ -4,14 +4,14 @@
 #include "Vertex.h"
 #include <vector>
 
-//Ä£ĞÍµÄMeshÍø¸ñ
+//æ¨¡å‹çš„Meshç½‘æ ¼
 class Mesh {
 
 public:
-	Transform transform;//Õâ¸öÊôĞÔÒ²¾ÍÒâÎ¶×ÅmeshÒ²ÊÇobject
+	Transform transform;//è¿™ä¸ªå±æ€§ä¹Ÿå°±æ„å‘³ç€meshä¹Ÿæ˜¯object
 
-	std::vector<Vertex> vertexBuffer;//¶¥µã
-	std::vector<Vector3i> trangleIndexBuffer;//Î»ÖÃ£¬uv£¬ ·¨Ïß
+	std::vector<Vertex> vertexBuffer;//é¡¶ç‚¹
+	std::vector<Vector3i> trangleIndexBuffer;//ä½ç½®ï¼Œuvï¼Œ æ³•çº¿
 
 	Mesh();
 	~Mesh();

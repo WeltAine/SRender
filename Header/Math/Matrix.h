@@ -12,7 +12,7 @@ public:
 	Matrix();
 	~Matrix();
 
-	//都是返回一个新的矩阵。不会更改原来的矩阵
+	//閮芥槸杩斿洖涓�涓柊鐨勭煩闃点�備笉浼氭洿鏀瑰師鏉ョ殑鐭╅樀
 	Matrix operator + (const Matrix& rightMatrix) const;
 	Matrix operator - (const Matrix& rightMatrix) const;
 	Matrix operator * (const Matrix& rightMatrix) const;
