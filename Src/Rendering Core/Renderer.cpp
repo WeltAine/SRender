@@ -9,11 +9,11 @@
 namespace newRender {
 
 	/// <summary>
-	/// ndcµ½ÆÁÄ»¿Õ¼ä£¬»ùÓÚbufferµÄÆÁÄ»¿Õ¼ä
+	/// ndcåˆ°å±å¹•ç©ºé—´ï¼ŒåŸºäºbufferçš„å±å¹•ç©ºé—´
 	/// </summary>
 	void Render::ScreenWorld() {
 
-		//×ªÏòÆÁÄ»¿Õ¼ä[width, height, 2]
+		//è½¬å‘å±å¹•ç©ºé—´[width, height, 2]
 		Matrix tem;
 		tem.matrix[0][0] = this->currentCamera->zBuffer->width / 2.0;	tem.matrix[0][3] = 0.5 * this->currentCamera->zBuffer->width;
 		tem.matrix[1][1] = this->currentCamera->zBuffer->height / 2.0;	tem.matrix[1][3] = 0.5 * this->currentCamera->zBuffer->height;
@@ -28,11 +28,11 @@ namespace newRender {
 
 
 	/// <summary>
-	/// ´ÓÏÂµ½ÉÏµÄÉ¨Ãè
+	/// ä»ä¸‹åˆ°ä¸Šçš„æ‰«æ
 	/// </summary>
 	void Render::ScanTriangle() {
 
-		//ÅÅĞò
+		//æ’åº
 		std::vector<Vector3f> trianglePositions;
 		trianglePositions.reserve(3);
 
@@ -40,7 +40,7 @@ namespace newRender {
 			trianglePositions.emplace_back(screenPosition);
 		}
 
-		//Ã°Åİ
+		//å†’æ³¡
 		if (trianglePositions[1].y < trianglePositions[2].y) {
 
 			trianglePositions[2] = this->renderDate.screenPositions[1];
@@ -69,15 +69,15 @@ namespace newRender {
 		AABB_xMax = AABB_xMax > this->renderDate.screenPositions[2].x ? AABB_xMax : this->renderDate.screenPositions[2].x;
 
 
-		int AABB_S = int(trianglePositions[0].y - trianglePositions[2].y) * int(AABB_xMax - AABB_xMin);//ÅĞ¶Ï°üÎ§ºĞ×Ó´óĞ¡
+		int AABB_S = int(trianglePositions[0].y - trianglePositions[2].y) * int(AABB_xMax - AABB_xMin);//åˆ¤æ–­åŒ…å›´ç›’å­å¤§å°
 
-		//¿ª±Ù¿Õ¼ä
+		//å¼€è¾Ÿç©ºé—´
 		this->renderDate.fragMates.clear();
 		this->renderDate.fragMates.reserve(AABB_S);
 
-		//È·¶¨ÏñËØ
+		//ç¡®å®šåƒç´ 
 		int yMax = trianglePositions[0].y, yMin = trianglePositions[2].y;
-		int yBoundary = trianglePositions[1].y + 0.5;//·Ö½çÓë·Ö½çÒÔÏÂ¹éÏÂÈı½Ç
+		int yBoundary = trianglePositions[1].y + 0.5;//åˆ†ç•Œä¸åˆ†ç•Œä»¥ä¸‹å½’ä¸‹ä¸‰è§’
 		
 		
 		for (int y = yMin; y <= yBoundary; y++) {
@@ -110,7 +110,7 @@ namespace newRender {
 			}
 
 			for (int x = left; x <= right; x++)
-				this->renderDate.fragMates.emplace_back(FragDate{ {}, {x, y}, {} });//²úÉúÆ¬ÔªÊı¾İ£¨ÕâÊ±Ö»ÓĞÆÁÄ»×ø±ê£©
+				this->renderDate.fragMates.emplace_back(FragDate{ {}, {x, y}, {} });//äº§ç”Ÿç‰‡å…ƒæ•°æ®ï¼ˆè¿™æ—¶åªæœ‰å±å¹•åæ ‡ï¼‰
 		}
 
 		for (int y = yBoundary + 1; y <= yMax; y++) {
@@ -144,13 +144,13 @@ namespace newRender {
 			}
 
 			for (int x = left; x <= right; x++)
-				this->renderDate.fragMates.emplace_back(FragDate{ {}, {x, y}, {} });//²úÉúÆ¬ÔªÊı¾İ£¨ÕâÊ±Ö»ÓĞÆÁÄ»×ø±ê£©
+				this->renderDate.fragMates.emplace_back(FragDate{ {}, {x, y}, {} });//äº§ç”Ÿç‰‡å…ƒæ•°æ®ï¼ˆè¿™æ—¶åªæœ‰å±å¹•åæ ‡ï¼‰
 
 		}
 
 	}
 
-	//²åÖµÓë½ÃÕı
+	//æ’å€¼ä¸çŸ«æ­£
 	void Render::Interpolation() {
 
 		for (FragDate& aimFrag : this->renderDate.fragMates) {
@@ -176,9 +176,9 @@ namespace newRender {
 
 			aimFrag.interpolations = {alpha, bate, gamma, 0};
 
-			//mv×ø±ê
+			//mvåæ ‡
 			aimFrag.fragVertex.position = this->renderDate.mvPositions[0] * alpha + this->renderDate.mvPositions[1] * bate + this->renderDate.mvPositions[2] * gamma;
-			//mv·¨Ïß
+			//mvæ³•çº¿
 			aimFrag.fragVertex.normal = this->renderDate.mvNormals[0] * alpha + this->renderDate.mvNormals[1] * bate + this->renderDate.mvNormals[2] * gamma;
 			aimFrag.fragVertex.normal.Normalize();
 
@@ -191,30 +191,30 @@ namespace newRender {
 	}
 
 	/// <summary>
-	/// Èı½ÇĞÎ¹âÕ¤»¯
+	/// ä¸‰è§’å½¢å…‰æ …åŒ–
 	/// </summary>
 	void Render::TriangleRasterization() {
 
 		PROFILE_FUNCTION(0, 0);
 
-		this->ScreenWorld();//×ª»»µ½ÆÁÄ»¿Õ¼ä
+		this->ScreenWorld();//è½¬æ¢åˆ°å±å¹•ç©ºé—´
 
-		//¹âÕ¤»¯£¨²úÉúÆ¬ÔªÏñËØÎ»ÖÃ£©
+		//å…‰æ …åŒ–ï¼ˆäº§ç”Ÿç‰‡å…ƒåƒç´ ä½ç½®ï¼‰
 		this->ScanTriangle();
 
-		//²åÖµ£¨²¹³ä¸÷¸öÆ¬ÔªÊôĞÔ£©
+		//æ’å€¼ï¼ˆè¡¥å……å„ä¸ªç‰‡å…ƒå±æ€§ï¼‰
 		this->Interpolation();
 
 	}
 
 	/// <summary>
-	/// Èı½ÇĞÎ±éÀú
+	/// ä¸‰è§’å½¢éå†
 	/// </summary>
 	void Render::TriangleTraversal() {
 
 		for (Vector3f mvpPosition : this->renderDate.mvpPositions) {
 
-			this->renderDate.ndcPositions.push_back(mvpPosition.Standardization());//µÃµ½Ò»¸ö[2*2*2]µÄ¿Õ¼ä
+			this->renderDate.ndcPositions.push_back(mvpPosition.Standardization());//å¾—åˆ°ä¸€ä¸ª[2*2*2]çš„ç©ºé—´
 
 		}
 
@@ -237,19 +237,19 @@ namespace newRender {
 
 		int lightIndex = 0;
 
-		//´¦Àí¹âÔ´£¬µÃµ½¹âÔ´µÄÉî¶ÈÎÆÀí
+		//å¤„ç†å…‰æºï¼Œå¾—åˆ°å…‰æºçš„æ·±åº¦çº¹ç†
 		for (Light* currentLight : this->renderDate.lights) {
 
 			this->SetCurrentCamera(currentLight);
-			//Ë¢ĞÂ»º´æ
+			//åˆ·æ–°ç¼“å­˜
 			this->currentCamera->zBuffer->Buffer::ResetBuffer();
 			this->currentCamera->cBuffer->Buffer::ResetBuffer();
 
 			int meshIndex = 0;
-			//ÖğÄ£ĞÍ
+			//é€æ¨¡å‹
 			for (Mesh* currentMesh : this->renderDate.aimObjs) {
 
-				//ÖğÈı½ÇÃæ
+				//é€ä¸‰è§’é¢
 				for (const Vector3i& trangleIndex : currentMesh->trangleIndexBuffer) {
 
 					this->renderDate.aimVertexs.clear();
@@ -277,7 +277,7 @@ namespace newRender {
 			}
 
 
-			//¹âÔ´Éî¶ÈÎÆÀíÍ¼Ïñ
+			//å…‰æºæ·±åº¦çº¹ç†å›¾åƒ
 			{
 				//BmpImg img(512, 512);
 				//for (int y = 0, x; y < 512; y++)
@@ -298,7 +298,7 @@ namespace newRender {
 
 
 		this->SetCurrentCamera(this->renderDate.mainCamera);
-		//Ë¢ĞÂ»º´æ
+		//åˆ·æ–°ç¼“å­˜
 		this->currentCamera->zBuffer->Buffer::ResetBuffer();
 		this->currentCamera->cBuffer->Buffer::ResetBuffer();
 
@@ -332,7 +332,7 @@ namespace newRender {
 
 		}
 
-		//Ö÷Ïà»úÉî¶ÈÎÆÀí
+		//ä¸»ç›¸æœºæ·±åº¦çº¹ç†
 		{
 			//BmpImg img(512, 512);
 			//for (int y = 0, x; y < 512; y++)
@@ -347,7 +347,7 @@ namespace newRender {
 			//img.write("z.bmp");
 		}
 
-		//×îÖÕÍ¼Ïñ
+		//æœ€ç»ˆå›¾åƒ
 		{
 			//BmpImg img(512, 512);
 			//for (int y = 0, x; y < 512; y++)
@@ -365,7 +365,9 @@ namespace newRender {
 
 			for (int x = 0; x < this->renderDate.mainCamera->cBuffer->width; x++) {
 
-				DrawPixel(x, this->renderDate.mainCamera->cBuffer->height - y - 1, this->renderDate.mainCamera->cBuffer->Sample(x, y));
+				//DrawPixel(x, this->renderDate.mainCamera->cBuffer->height - y - 1, this->renderDate.mainCamera->cBuffer->Sample(x, y));
+				DrawPixel(x, y, this->renderDate.mainCamera->cBuffer->Sample(x, y));
+
 			}
 		}
 
@@ -373,7 +375,10 @@ namespace newRender {
 
 	void Render::DrawPixel(int x, int y, Color color) {
 
-		SetPixel(screenHDC, x, y, RGB(color.r, color.g, color.b));
+		//SetPixel(screenHDC, x, y, RGB(color.r, color.g, color.b));
+		int index = y * this->deviceWidth + x;
+		frameBuffer[index] = (color.b) | (color.g << 8) | (color.r << 16) | (0xFF << 24);
+
 
 	}
 

@@ -8,6 +8,8 @@
 #include "../Resources/Buffer.h"
 #include "../Tool/libbmp.h"
 #include"Shader.h"
+#include <cstdint>
+
 
 
 
@@ -21,14 +23,27 @@ namespace newRender {
 		HDC screenHDC;
 		int deviceWidth, deviceHeight;
 
+		uint32_t* frameBuffer;
+
+
 		Render(HDC inScreenHDC, int inDeviceWidth, int inDeviceHeight, RenderDate& inRenderDate)
-			:screenHDC{ inScreenHDC }, deviceHeight{ inDeviceHeight }, deviceWidth{ inDeviceWidth }, renderDate{ inRenderDate } 
+			:screenHDC{ inScreenHDC }, deviceHeight{ inDeviceHeight }, deviceWidth{ inDeviceWidth }, renderDate{ inRenderDate }, frameBuffer{ nullptr }
 		{
 			currentCamera = nullptr;
 
 			this->renderDate.mainCamera->zBuffer->ResetBuffer(deviceWidth, deviceHeight);
 			this->renderDate.mainCamera->cBuffer->ResetBuffer(deviceWidth, deviceHeight);			
 		}
+
+		Render(HDC inScreenHDC, int inDeviceWidth, int inDeviceHeight, RenderDate& inRenderDate, uint32_t* _frameBuffer)
+			:screenHDC{ inScreenHDC }, deviceHeight{ inDeviceHeight }, deviceWidth{ inDeviceWidth }, renderDate{ inRenderDate }, frameBuffer{ _frameBuffer }
+		{
+			currentCamera = nullptr;
+
+			this->renderDate.mainCamera->zBuffer->ResetBuffer(deviceWidth, deviceHeight);
+			this->renderDate.mainCamera->cBuffer->ResetBuffer(deviceWidth, deviceHeight);
+		}
+
 
 
 		void ScreenWorld();

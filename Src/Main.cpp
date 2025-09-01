@@ -15,27 +15,31 @@
 static const int windowWidth = 512;
 static const int windowHeight = 512;
 
-Window* w = new Window(windowWidth, windowHeight, "Test");//´°¿Ú
+Window* w = new Window(windowWidth, windowHeight, "Test");//çª—å£
 
-//´´½¨Ïà»úºÍ¹âÔ´
+//åˆ›å»ºç›¸æœºå’Œå…‰æº
 Camera mainCamera{ {}, true, 1, 1, 50, 60 };
 DirectionLight directLight{ { {}, false, 1, 1, 50, 168.6 }, 1 };
 PointLight pointLight{ { {}, true, 1, 1, 50, 60 }, 1 };
-//´´½¨Ä£ĞÍ
+//åˆ›å»ºæ¨¡å‹
 Mesh cube{};
 Mesh plane{};
 
 
-//´´½¨ÎÆÀí
+//åˆ›å»ºçº¹ç†
 Texture gezi = Texture(225, 225);
 
-//°ó¶¨ĞèÒªäÖÈ¾µØÄ£ĞÍ£¬Ã¿¸öÄ£ĞÍµØÎÆÀí£¬ËùÓĞ¹âÔ´£¬Ö÷Ïà»ú¡£
-//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//Ö±Ïß¹â
-//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&pointLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//µã¹âÔ´
-RenderDate rDate{ {&cube, &plane}, {&gezi, &gezi}, {&pointLight, &directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//¶à¹âÔ´
-newRender::Render render{ w->screenHDC, windowWidth, windowHeight, rDate };
+//ç»‘å®šéœ€è¦æ¸²æŸ“åœ°æ¨¡å‹ï¼Œæ¯ä¸ªæ¨¡å‹åœ°çº¹ç†ï¼Œæ‰€æœ‰å…‰æºï¼Œä¸»ç›¸æœºã€‚
+//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//ç›´çº¿å…‰
+//RenderDate rDate{ {&cube, &plane}, {gezi, gezi}, {&pointLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//ç‚¹å…‰æº
+//RenderDate rDate{ {&cube, &plane}, {&gezi, &gezi}, {&pointLight, &directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//å¤šå…‰æº
+//newRender::Render render{ w->screenHDC, windowWidth, windowHeight, rDate };
 
-//´´½¨Ö¸¶¨shadow²¢°ó¶¨Òª¶ÁÈ¡µØÊı¾İ
+RenderDate rDate{ {&cube, &plane}, {&gezi, &gezi}, {&pointLight, &directLight}, {&mainCamera}, {}, {}, {}, {}, {}, {}, {} };//å¤šå…‰æº
+newRender::Render render{ w->screenHDC, windowWidth, windowHeight, rDate, w->frameBuffer };
+
+
+//åˆ›å»ºæŒ‡å®šshadowå¹¶ç»‘å®šè¦è¯»å–åœ°æ•°æ®
 newShader::ShadowShader shadowShader{ &rDate };
 newShader::PhongShader phongShader{ &rDate };
 
@@ -44,18 +48,18 @@ void Update(Window* w);
 
 int main() {
 
-	//¼ÓÔØÊı¾İ
+	//åŠ è½½æ•°æ®
 	ReadObjFile("cube.obj", &cube);
 	ReadObjFile("Plane.obj", &plane);
 	gezi.LoadTexture("gezi.bmp");
 
-	//µ÷ÕûÅäÖÃ
+	//è°ƒæ•´é…ç½®
 	rDate.shadowShader = &shadowShader;
 	rDate.renderShader = &phongShader;
 
-	//µ÷ÕûÏà»úºÍ¹âÔ´Î»ÖÃ
-	mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);//Í¸ÊÓ
-	//mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);//Õı½»
+	//è°ƒæ•´ç›¸æœºå’Œå…‰æºä½ç½®
+	mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);//é€è§†
+	//mainCamera.UpdateCamera({ {-2, 2, -2}, {45, 45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);//æ­£äº¤
 	
 	directLight.UpdateCamera({ {2, 2, -2}, {30, -45, 0}, {1, 1, 1} }, false, 1, 1, 10, 130);
 	pointLight.UpdateCamera({ {2, 2, -2}, {45, -45, 0}, {1, 1, 1} }, true, 1, 1, 10, 60);
@@ -106,15 +110,15 @@ Vector3f deltaCameraRotation{};
 void UpdateInput()
 {
 
-	// ¼ì²é¿Õ¸ñ¼üÊÇ·ñ°´ÏÂ
+	// æ£€æŸ¥ç©ºæ ¼é”®æ˜¯å¦æŒ‰ä¸‹
 	if (IS_KEY_DOWN(VK_SPACE))
 	{
-		PostQuitMessage(0); // ·¢ËÍÍË³öÏûÏ¢
-		return; // Ö±½Ó·µ»Ø£¬±ÜÃâºóĞø´¦Àí
+		PostQuitMessage(0); // å‘é€é€€å‡ºæ¶ˆæ¯
+		return; // ç›´æ¥è¿”å›ï¼Œé¿å…åç»­å¤„ç†
 	}
 
 
-	//Ïà»úµÄÎ»ÒÆ
+	//ç›¸æœºçš„ä½ç§»
 	if (IS_KEY_DOWN('A'))
 	{
 		deltaCameraPosition.x -= 0.05f;
@@ -143,10 +147,10 @@ void UpdateInput()
 	deltaCameraPosition = render.renderDate.mainCamera->transform.xAxis * deltaCameraPosition.x 
 		+ render.renderDate.mainCamera->transform.yAxis * deltaCameraPosition.y
 		+ render.renderDate.mainCamera->transform.zAxis * deltaCameraPosition.z;
-	render.renderDate.mainCamera->transform.Translate(deltaCameraPosition);//ÒÆ¶¯
+	render.renderDate.mainCamera->transform.Translate(deltaCameraPosition);//ç§»åŠ¨
 
 
-	//Ïà»úµÄĞı×ª
+	//ç›¸æœºçš„æ—‹è½¬
 	if (IS_KEY_DOWN('J'))
 	{
 		deltaCameraRotation.y -= 0.5f;
@@ -163,10 +167,10 @@ void UpdateInput()
 	{
 		deltaCameraRotation.x += 0.5f;
 	}
-	render.renderDate.mainCamera->transform.Rotate(deltaCameraRotation);//Ğı×ª
+	render.renderDate.mainCamera->transform.Rotate(deltaCameraRotation);//æ—‹è½¬
 
 
-	//ÖØÖÃÏà»úµÄdelta
+	//é‡ç½®ç›¸æœºçš„delta
 	deltaCameraPosition.x = 0;
 	deltaCameraPosition.y = 0;
 	deltaCameraPosition.z = 0;
